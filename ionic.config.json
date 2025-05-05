@@ -1,0 +1,7 @@
+{
+  "name": "desplugApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
