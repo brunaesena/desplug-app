@@ -80,27 +80,6 @@ const ExploreContainer: React.FC = () => {
           </IonRow>
         </IonGrid>
       </IonContent>
-
-      <IonFooter>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home">
-            <IonIcon icon={homeOutline} />
-            <IonLabel>Início</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="buscar">
-            <IonIcon icon={searchOutline} /> 
-            <IonLabel>Buscar</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="eventos">
-            <IonIcon icon={calendarOutline} />
-            <IonLabel>Eventos</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="perfil">
-            <IonIcon icon={personOutline} />
-            <IonLabel>Perfil</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonFooter>
     </IonPage>
   );
 };
