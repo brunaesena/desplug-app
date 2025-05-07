@@ -1,88 +1,101 @@
-import './ExploreContainer.css';
 import React from 'react';
 import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonFooter,
-  IonTabBar,
-  IonTabButton,
-  IonIcon,
-  IonLabel,
-  IonSearchbar,
-  IonButton,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardContent
-  
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonSearchbar,
+    IonCard,
+    IonCardContent,
 } from '@ionic/react';
-import {
-  homeOutline,
-  searchOutline,
-  chatbubbleEllipsesOutline,
-  calendarOutline,
-  personOutline,
-  filterOutline
-  
-  
-} from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
 
-import './ExploreContainer.css';
+import './ExploreContainer.css'; // Importe o CSS
 
-const categories = [
-  { name: 'Cultura', color: '#2d4a2e' },
-  { name: 'Educação', color: '#cc6657' },
-  { name: 'Bem-estar', color: '#d8629e' },
-  { name: 'Mindfulness', color: '#ec6ea1' },
-  { name: 'Socialização', color: '#558ca6' },
-  { name: 'Ar Livre', color: '#f3cb39' },
-  { name: 'Cidadania', color: '#ce9442' },
-  { name: 'Esportes', color: '#27423a' },
-];
+const dailyInfo = {
+    title: "Benefícios da Meditação Mindfulness",
+    content: "Descubra como a prática regular de mindfulness pode reduzir o estresse e melhorar o foco.",
+    link: "/artigo-mindfulness", // Rota para o artigo
+};
 
 const ExploreContainer: React.FC = () => {
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-        <IonTitle className="app-title">
-        <img src="/logo.png" alt="Desplug logo" className="app-logo" />
-        </IonTitle>
+    const history = useHistory();
 
-        </IonToolbar>
-      </IonHeader>
+    const navigateTo = (path: string) => {
+        history.push(path);
+    };
 
-      <IonContent>
-        <IonSearchbar placeholder="Busque por eventos" showClearButton="focus" />
-        <div className="filter-buttons">
-          <IonButton size="small">Eventos</IonButton>
-          <IonButton size="small" fill="outline">Consultorias</IonButton>
-          <IonButton size="small" fill="clear">
-            <IonIcon icon={filterOutline} />
-          </IonButton>
-        </div>
+    return (
+        <IonPage>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle className="app-title">
+                        {/* Use um caminho relativo para a imagem */}
+                        <img src="/logo.png" alt="Desplug logo" className="app-logo" />
+                    </IonTitle>
+                </IonToolbar>
+            </IonHeader>
 
-        <IonGrid>
-          <IonRow>
-            {categories.map((cat, index) => (
-              <IonCol size="6" key={index}>
-                <IonCard style={{ backgroundColor: cat.color }} className="event-card">
-                  <IonCardContent>
-                    <h3>{cat.name}</h3>
-                  </IonCardContent>
+            <IonContent>
+                <IonSearchbar
+                    placeholder="Busque por eventos"
+                    showClearButton="focus"
+                />
+
+                <h2 className="activities-title">Atividades disponíveis</h2>
+
+                <IonCard
+                    className="activity-card info-card"
+                    onClick={() => navigateTo(dailyInfo.link)}
+                >
+                    <IonCardContent>
+                        <h3 className="activity-name">{dailyInfo.title}</h3>
+                        <p className="activity-details">
+                            {dailyInfo.content}
+                            <span className="learn-more">Saiba mais</span>
+                        </p>
+                    </IonCardContent>
                 </IonCard>
-              </IonCol>
-            ))}
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonPage>
-  );
+
+                <IonCard
+                    className="activity-card challenges-card"
+                    onClick={() => navigateTo("/desafios")}
+                >
+                    <IonCardContent>
+                        <h3 className="activity-name">Desafios</h3>
+                    </IonCardContent>
+                </IonCard>
+
+                <IonCard
+                    className="activity-card events-card"
+                    onClick={() => navigateTo("/eventos")}
+                >
+                    <IonCardContent>
+                        <h3 className="activity-name">Eventos</h3>
+                    </IonCardContent>
+                </IonCard>
+
+                <IonCard
+                    className="activity-card consultancies-card"
+                    onClick={() => navigateTo("/consultorias")}
+                >
+                    <IonCardContent>
+                        <h3 className="activity-name">Consultoria</h3>
+                    </IonCardContent>
+                </IonCard>
+
+                <IonCard
+                    className="activity-card lectures-card"
+                    onClick={() => navigateTo("/palestras")}
+                >
+                    <IonCardContent>
+                        <h3 className="activity-name">Palestras</h3>
+                    </IonCardContent>
+                </IonCard>
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default ExploreContainer;
-

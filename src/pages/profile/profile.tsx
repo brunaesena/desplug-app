@@ -13,6 +13,7 @@ import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { useHistory } from 'react-router'
 import { auth, db } from '../../firebase'
+import Footer from '../../components/Footer'
 
 const Profile = () => {
   const history = useHistory()
@@ -93,6 +94,7 @@ const Profile = () => {
           </div>
         )}
       </IonContent>
+      <Footer/>
     </IonPage>
   )
 }

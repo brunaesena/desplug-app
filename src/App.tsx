@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register'
 import Profile from './pages/profile/profile'
-
+import Challenges from './pages/home/challenges'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -46,6 +46,7 @@ const App: React.FC = () => (
         <Redirect exact from="/" to="/login" />
         <Route exact path="/register" component={Register} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/desafios" component={Challenges} />
         <Route exact path="/home">
           <Home />
         </Route>

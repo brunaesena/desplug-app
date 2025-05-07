@@ -1,83 +1,190 @@
+/* Cores da marca */
+:root {
+  --branco-principal: #fcfcfc;
+  --azul-claro-1: #4fcdfc;
+  --azul-claro-2: #6ac2e2;
+  --azul-medio: #85b7c9;
+  --cinza-claro: #a1adb0;
+  --azul-escuro: #247BA0;
+  --cinza-escuro: #555555;
+}
 
 .app-title {
   text-align: center;
-  color: #5aa6e0;
+  color: var(--azul-claro-1);
   font-weight: 700;
   font-size: 24px;
-  margin-top: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   font-family: 'Segoe UI', sans-serif;
 }
 
-
-.filter-buttons {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 16px;
+ion-searchbar {
+  padding: 8px 16px;
   margin-top: 10px;
+  margin-bottom: 20px;
+  --box-shadow: none;
+  --border-radius: 10px;
+  --ion-background-color: var(--branco-principal);
+  border: 1px solid var(--cinza-claro);
+}
+
+.activities-title {
+  padding: 0 16px;
+  margin-top: 24px;
   margin-bottom: 16px;
-  gap: 8px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--cinza-escuro);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-
-.event-card {
-  height: 100px;
+.activity-card {
+  margin: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  height: 140px; /* Altura um pouco maior */
   display: flex;
-  align-items: flex-end;
-  border-radius: 20px;
-  color: white;
-  padding: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
+  flex-direction: column; /* Organizar texto verticalmente */
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  color: var(--branco-principal);
+  text-align: center;
+  transition: transform 0.2s ease-in-out; /* Pequena animação ao interagir */
 }
 
-.event-card:hover {
+.activity-card:hover {
   transform: scale(1.02);
 }
 
-.event-card h3 {
-  margin: 0;
-  font-weight: 600;
-  font-size: 16px;
+.activity-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.activity-name {
+  margin-bottom: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
   font-family: 'Segoe UI', sans-serif;
 }
 
+.activity-details {
+  font-size: 0.9em;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--branco-principal); /* Manter branco para contraste nos cards coloridos */
+}
+
+.info-card {
+  background-color: var(--azul-claro-1);
+  border-left: 4px solid var(--azul-escuro);
+}
+
+.info-card .activity-name {
+  color: var(--branco-principal);
+}
+
+.info-card .activity-details {
+  color: var(--branco-principal);
+}
+
+.learn-more {
+  color: var(--branco-principal);
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  text-decoration: underline;
+}
+
+.challenges-card {
+  background-color: var(--cinza-claro);
+  color: var(--azul-escuro);
+}
+
+.events-card {
+  background-color: var(--azul-claro-2);
+}
+
+.consultancies-card {
+  background-color: var(--azul-medio);
+}
+
+.lectures-card {
+  background-color: var(--cinza-claro);
+  color: var(--azul-escuro);
+}
 
 ion-tab-bar {
-  --background: #ffffff;
-  border-top: 1px solid #e0e0e0;
+  --background: var(--branco-principal);
+  border-top: 1px solid var(--azul-medio);
+  --border-radius: 0;
 }
 
 ion-tab-button {
-  color: #999999;
-  --color-selected: #5aa6e0;
+  color: var(--azul-escuro);
+  --color-selected: var(--azul-claro-1);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4px 0;
+  padding: 8px 0; /* Aumentar um pouco o padding vertical */
 }
 
 ion-tab-button ion-icon {
-  font-size: 22px;
-  margin-bottom: 2px;
+  font-size: 1.4em; /* Ícones um pouco maiores */
+  margin-bottom: 4px;
 }
 
 ion-tab-button ion-label {
-  font-size: 11px;
-}
-
-
-ion-searchbar {
-  padding: 0 12px;
-  margin-top: 10px;
-  margin-bottom: 6px;
-  --box-shadow: none;
-  --border-radius: 12px;
+  font-size: 0.8em;
 }
 
 .app-logo {
-  height: 40px;
+  height: 50px; /* Logo um pouco maior */
   object-fit: contain;
-  margin: 6px auto;
+  margin: 12px auto;
   display: block;
 }
 
+/* Estilos para telas menores (responsividade básica) */
+@media (max-width: 600px) {
+  .app-title {
+      font-size: 22px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+  }
+
+  .activities-title {
+      font-size: 1.1em;
+      margin-top: 20px;
+      margin-bottom: 12px;
+  }
+
+  .activity-card {
+      height: 120px; /* Cards um pouco menores em telas pequenas */
+      margin: 8px;
+      padding: 12px;
+  }
+
+  .activity-name {
+      font-size: 1em;
+      margin-bottom: 4px;
+  }
+
+  .activity-details {
+      font-size: 0.8em;
+  }
+
+  ion-tab-button ion-icon {
+      font-size: 1.2em;
+      margin-bottom: 2px;
+  }
+
+  ion-tab-button ion-label {
+      font-size: 0.7em;
+  }
+}
