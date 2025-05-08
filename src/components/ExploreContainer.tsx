@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 
-import './ExploreContainer.css'; // Importe o CSS
+import './ExploreContainer.css'; 
 
 const dailyInfo = {
     title: "Benefícios da Meditação Mindfulness",
