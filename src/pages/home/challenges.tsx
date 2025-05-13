@@ -15,6 +15,7 @@ import {
   useIonRouter
 } from '@ionic/react';
 import { shareSocialOutline } from 'ionicons/icons';
+import Footer from '../../components/Footer';
 //import '../Home.css';
 
 const challenges = [
@@ -41,7 +42,6 @@ const Challenges: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   const router = useIonRouter();
 
-  // Aguarda o estado selectedChallenge estar definido para mostrar o alerta
   useEffect(() => {
     if (selectedChallenge) {
       setShowAlert(true);
@@ -111,6 +111,7 @@ const Challenges: React.FC = () => {
           buttons={['OK']}
         />
       </IonContent>
+      <Footer/>
     </IonPage>
   );
 };

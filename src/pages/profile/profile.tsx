@@ -11,12 +11,12 @@ import {
 } from '@ionic/react'
 import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { auth, db } from '../../firebase'
 import Footer from '../../components/Footer'
 
 const Profile = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -25,7 +25,7 @@ const Profile = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         setLoading(false)
-        history.replace('/login')
+        navigate('/login')
         return
       }
 
@@ -58,7 +58,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     await signOut(auth)
-    history.replace('/login')
+    navigate('/login')
   }
 
   return (

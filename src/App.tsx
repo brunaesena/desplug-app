@@ -1,61 +1,36 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-import Login from './pages/auth/login';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { IonApp, setupIonicReact } from '@ionic/react'
+import Home from './pages/Home'
+import Login from './pages/auth/login'
 import Register from './pages/auth/register'
 import Profile from './pages/profile/profile'
 import Challenges from './pages/home/challenges'
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import Events from './pages/home/events'
+import Appointments from './pages/home/appointments'
+import Lectures from './pages/home/lectures'
 
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
+import '@ionic/react/css/core.css'
+import './theme/variables.css'
+import './App.css'
 
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
-
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
-
-/* Theme variables */
-import './theme/variables.css';
-
-setupIonicReact();
+setupIonicReact()
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/login" component={Login} />
-        <Redirect exact from="/" to="/login" />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/desafios" component={Challenges} />
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/desafios" element={<Challenges />} />
+        <Route path="/eventos" element={<Events />} />
+        <Route path="/consultorias" element={<Appointments />} />
+        <Route path="/palestras" element={<Lectures />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
   </IonApp>
-);
+)
 
-export default App;
+export default App

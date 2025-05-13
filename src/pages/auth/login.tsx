@@ -10,12 +10,12 @@ import {
   IonText,
   IonImg
 } from '@ionic/react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase'
 
 const Login = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -23,19 +23,9 @@ const Login = () => {
   const handleLogin = async () => {
     setError('')
 
-    if (!email.includes('@')) {
-      setError('Email inválido.')
-      return
-    }
-
-    if (password.length < 6) {
-      setError('A senha deve ter no mínimo 6 caracteres.')
-      return
-    }
-
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      history.push('/home')
+      navigate('/home')
     } catch (err: any) {
       setError(err.message)
     }
@@ -47,7 +37,7 @@ const Login = () => {
       </IonHeader>
       <IonContent>
         <div className="login-container">
-          <IonImg src="/logo.png" className="logo-img" />
+          <IonImg src="/logo.png" className="logo logo-box" />
 
           <IonInput
             placeholder="E-mail"
@@ -73,13 +63,13 @@ const Login = () => {
             </IonText>
           )}
 
-          <IonButton expand="full" onClick={handleLogin} className="login-btn">
+          <IonButton expand="full" onClick={handleLogin} className="login-button">
             Entrar
           </IonButton>
 
           <IonText className="text-footer">
             <p>
-              Não tem uma conta? <span onClick={() => history.push('/register')} style={{ color: '#4fcdfc', cursor: 'pointer' }}>Registre-se aqui</span>
+              Não tem uma conta? <span onClick={() => navigate('/register')} style={{ color: '#4fcdfc', cursor: 'pointer' }}>Registre-se aqui</span>
             </p>
           </IonText>
         </div>

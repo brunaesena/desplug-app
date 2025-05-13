@@ -9,7 +9,7 @@ import {
     IonCard,
     IonCardContent,
 } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 import './ExploreContainer.css'; 
 
@@ -20,10 +20,10 @@ const dailyInfo = {
 };
 
 const ExploreContainer: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate()
 
     const navigateTo = (path: string) => {
-        history.push(path);
+        navigate(path);
     };
 
     return (

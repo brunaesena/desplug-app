@@ -8,21 +8,25 @@ import {
   IonInput,
   IonButton,
   IonText,
-  IonImg
+  IonImg,
+  IonItem,
+  IonLabel,
+  IonCheckbox
 } from '@ionic/react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db } from '../../firebase'
 import './register.css'
 
 const Register = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [phone, setPhone] = useState('')
+  const [isProvider, setIsProvider] = useState(false)
   const [error, setError] = useState('')
 
   const validate = () => {
@@ -58,11 +62,11 @@ const Register = () => {
         name,
         email,
         phone,
-        type: 'consumer', // padrão, se não houver seleção
+        type: isProvider ? 'provider' : 'consumer',
         createdAt: serverTimestamp()
       })
 
-      history.push('/login')
+      navigate('/login')
     } catch (err: any) {
       setError(err.message)
     }
@@ -70,8 +74,7 @@ const Register = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-      </IonHeader>
+      <IonHeader />
       <IonContent>
         <div className="register-container">
           <IonImg src="/logo.png" className="logo-img" />
@@ -117,6 +120,15 @@ const Register = () => {
             clearInput
           />
 
+          <IonItem lines="none" className="checkbox-item">
+            <IonCheckbox
+              checked={isProvider}
+              onIonChange={(e) => setIsProvider(e.detail.checked)}
+              slot="start"
+            />
+            <IonLabel>Sou prestador de serviço</IonLabel>
+          </IonItem>
+
           {error && (
             <IonText color="danger">
               <p style={{ textAlign: 'center' }}>{error}</p>
@@ -130,7 +142,7 @@ const Register = () => {
           <IonText className="text-footer">
             <p>
               Já tem uma conta?{' '}
-              <span onClick={() => history.push('/login')} style={{ color: '#4fcdfc', cursor: 'pointer' }}>
+              <span onClick={() => navigate('/login')} style={{ color: '#4fcdfc', cursor: 'pointer' }}>
                 Faça login aqui
               </span>
             </p>
