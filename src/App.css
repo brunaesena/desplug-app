@@ -1,0 +1,30 @@
+/* html, body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    display: flex;
+    justify-content: center;     
+    align-items: center;        
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+
+  #root, ion-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  ion-app {
+    max-width: 390px; 
+    width: 100%;
+    background-color: #121212;
+    min-height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+  } */
+  

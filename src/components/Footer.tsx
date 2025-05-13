@@ -5,30 +5,30 @@ import {
   calendarOutline,
   personOutline
 } from 'ionicons/icons'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 const Footer: React.FC = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <IonFooter>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home" onClick={() => history.push('/home')}>
+        <IonTabButton tab="home" onClick={() => navigate('/home')}>
           <IonIcon icon={homeOutline} />
           <IonLabel>Início</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="buscar" onClick={() => history.push('/buscar')}>
+        <IonTabButton tab="buscar" onClick={() => navigate('/buscar')}>
           <IonIcon icon={searchOutline} />
           <IonLabel>Buscar</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="eventos" onClick={() => history.push('/eventos')}>
+        <IonTabButton tab="eventos" onClick={() => navigate('/eventos')}>
           <IonIcon icon={calendarOutline} />
           <IonLabel>Eventos</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="perfil" onClick={() => history.push('/profile')}>
+        <IonTabButton tab="perfil" onClick={() => navigate('/profile')}>
           <IonIcon icon={personOutline} />
           <IonLabel>Perfil</IonLabel>
         </IonTabButton>
