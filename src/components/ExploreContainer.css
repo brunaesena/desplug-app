@@ -1,190 +1,323 @@
-/* Cores da marca */
+/* ============= VARIÁVEIS GLOBAIS ============= */
 :root {
-  --branco-principal: #fcfcfc;
-  --azul-claro-1: #4fcdfc;
-  --azul-claro-2: #6ac2e2;
-  --azul-medio: #85b7c9;
-  --cinza-claro: #a1adb0;
-  --azul-escuro: #247BA0;
-  --cinza-escuro: #555555;
+  /* Cores Primárias */
+  --color-primary: #4a89dc;
+  --color-primary-light: #e3f2fd;
+  --color-primary-dark: #3a73c1;
+  --color-secondary: #a0d468;
+  --color-accent: #2196f3;
+  
+  /* Tons Neutros */
+  --color-text: #2c3e50;
+  --color-text-light: #555;
+  --color-text-lighter: #7f8c8d;
+  --color-bg: #f8f9fa;
+  --color-card: #fff;
+  --color-border: #e0e0e0;
+  
+  /* Cores Temáticas */
+  --color-challenge: #7cb342;
+  --color-event: #fb8c00;
+  --color-consultancy: #9c27b0;
+  --color-lecture: #5c6bc0;
+
+  /* Sombras */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* Bordas */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: 0.45s ease;
+}
+
+/* ============= ESTILOS GERAIS ============= */
+ion-content {
+  --background: var(--color-bg);
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ============= HEADER ============= */
+ion-toolbar {
+  --background: var(--color-card);
+  --color: var(--color-text);
+  --border-color: var(--color-border);
+  --border-width: 0 0 1px 0;
+  --min-height: 70px;
 }
 
 .app-title {
-  text-align: center;
-  color: var(--azul-claro-1);
-  font-weight: 700;
-  font-size: 24px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-ion-searchbar {
-  padding: 8px 16px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  --box-shadow: none;
-  --border-radius: 10px;
-  --ion-background-color: var(--branco-principal);
-  border: 1px solid var(--cinza-claro);
-}
-
-.activities-title {
-  padding: 0 16px;
-  margin-top: 24px;
-  margin-bottom: 16px;
-  font-size: 1.2em;
-  font-weight: 600;
-  color: var(--cinza-escuro);
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.activity-card {
-  margin: 16px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  height: 140px; /* Altura um pouco maior */
   display: flex;
-  flex-direction: column; /* Organizar texto verticalmente */
-  align-items: center;
   justify-content: center;
-  padding: 16px;
-  color: var(--branco-principal);
-  text-align: center;
-  transition: transform 0.2s ease-in-out; /* Pequena animação ao interagir */
-}
-
-.activity-card:hover {
-  transform: scale(1.02);
-}
-
-.activity-card-content {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
-  width: 100%;
-}
-
-.activity-name {
-  margin-bottom: 8px;
-  font-size: 1.1em;
-  font-weight: bold;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.activity-details {
-  font-size: 0.9em;
-  font-family: 'Segoe UI', sans-serif;
-  color: var(--branco-principal); /* Manter branco para contraste nos cards coloridos */
-}
-
-.info-card {
-  background-color: var(--azul-claro-1);
-  border-left: 4px solid var(--azul-escuro);
-}
-
-.info-card .activity-name {
-  color: var(--branco-principal);
-}
-
-.info-card .activity-details {
-  color: var(--branco-principal);
-}
-
-.learn-more {
-  color: var(--branco-principal);
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 8px;
-  text-decoration: underline;
-}
-
-.challenges-card {
-  background-color: var(--cinza-claro);
-  color: var(--azul-escuro);
-}
-
-.events-card {
-  background-color: var(--azul-claro-2);
-}
-
-.consultancies-card {
-  background-color: var(--azul-medio);
-}
-
-.lectures-card {
-  background-color: var(--cinza-claro);
-  color: var(--azul-escuro);
-}
-
-ion-tab-bar {
-  --background: var(--branco-principal);
-  border-top: 1px solid var(--azul-medio);
-  --border-radius: 0;
-}
-
-ion-tab-button {
-  color: var(--azul-escuro);
-  --color-selected: var(--azul-claro-1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px 0; /* Aumentar um pouco o padding vertical */
-}
-
-ion-tab-button ion-icon {
-  font-size: 1.4em; /* Ícones um pouco maiores */
-  margin-bottom: 4px;
-}
-
-ion-tab-button ion-label {
-  font-size: 0.8em;
+  gap: 10px;
 }
 
 .app-logo {
-  height: 50px; /* Logo um pouco maior */
+  height: 40px;
   object-fit: contain;
-  margin: 12px auto;
-  display: block;
+  transition: transform var(--transition-fast);
 }
 
-/* Estilos para telas menores (responsividade básica) */
-@media (max-width: 600px) {
-  .app-title {
-      font-size: 22px;
-      margin-top: 12px;
-      margin-bottom: 12px;
+.app-logo:hover {
+  transform: scale(1.05);
+}
+
+/* ============= BARRA DE BUSCA ============= */
+ion-searchbar {
+  --background: var(--color-card);
+  --border-radius: var(--radius-sm);
+  --box-shadow: var(--shadow-sm);
+  --color: var(--color-text);
+  --icon-color: var(--color-text-lighter);
+  --placeholder-color: #a8a8a8;
+  --placeholder-opacity: 0.8;
+  padding: 0 0 20px 0;
+  margin-bottom: 8px;
+}
+
+/* ============= TÍTULOS ============= */
+.activities-title {
+  color: var(--color-text);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 28px 16px 20px;
+  position: relative;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.activities-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 16px;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 2px;
+  opacity: 0.9;
+  transition: width var(--transition-normal);
+}
+
+.activities-title:hover::after {
+  width: 80px;
+}
+
+/* ============= CARDS ============= */
+ion-card {
+  --background: var(--color-card);
+  margin: 0 0 20px 0;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+ion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+ion-card:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+ion-card-content {
+  padding: 20px;
+}
+
+/* Card de Informações */
+.info-card {
+  --background: var(--color-primary-light);
+  border-left: 4px solid var(--color-primary);
+}
+
+/* Cards de Categorias */
+.challenges-card {
+  --background: #f1f8e9;
+  border-left: 4px solid var(--color-challenge);
+}
+
+.events-card {
+  --background: #fff3e0;
+  border-left: 4px solid var(--color-event);
+}
+
+.consultancies-card {
+  --background: #f3e5f5;
+  border-left: 4px solid var(--color-consultancy);
+}
+
+.lectures-card {
+  --background: #e8eaf6;
+  border-left: 4px solid var(--color-lecture);
+}
+
+/* ============= CONTEÚDO DOS CARDS ============= */
+.activity-name {
+  color: var(--color-text);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
+}
+
+.activity-details {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.learn-more {
+  display: inline-block;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-top: 12px;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.learn-more::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transition: width var(--transition-normal);
+}
+
+.learn-more:hover {
+  color: var(--color-primary-dark);
+}
+
+.learn-more:hover::after {
+  width: 100%;
+}
+
+/* ============= EFEITOS ESPECIAIS ============= */
+/* Efeito de Loading */
+.skeleton-loading {
+  background: linear-gradient(90deg, 
+    rgba(240, 240, 240, 0.9) 25%, 
+    rgba(224, 224, 224, 0.9) 50%, 
+    rgba(240, 240, 240, 0.9) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+  min-height: 20px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============= DARK MODE ============= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f5f5f5;
+    --color-text-light: #b0b0b0;
+    --color-bg: #121212;
+    --color-card: #1e1e1e;
+    --color-border: #333;
   }
 
+  ion-toolbar {
+    --background: #1a1a1a;
+  }
+
+  .info-card {
+    --background: #1a2a3a;
+  }
+
+  .challenges-card {
+    --background: #1a2a1a;
+  }
+
+  .events-card {
+    --background: #2a1a0a;
+  }
+
+  .consultancies-card {
+    --background: #2a0a2a;
+  }
+
+  .lectures-card {
+    --background: #1a1a3a;
+  }
+
+  .skeleton-loading {
+    background: linear-gradient(90deg, 
+      rgba(50, 50, 50, 0.9) 25%, 
+      rgba(70, 70, 70, 0.9) 50%, 
+      rgba(50, 50, 50, 0.9) 75%);
+  }
+}
+
+/* ============= RESPONSIVIDADE ============= */
+@media (max-width: 576px) {
   .activities-title {
-      font-size: 1.1em;
-      margin-top: 20px;
-      margin-bottom: 12px;
+    font-size: 1.6rem;
+    margin: 24px 16px 16px;
   }
 
-  .activity-card {
-      height: 120px; /* Cards um pouco menores em telas pequenas */
-      margin: 8px;
-      padding: 12px;
+  ion-card {
+    margin-bottom: 16px;
+    border-radius: var(--radius-sm);
   }
 
-  .activity-name {
-      font-size: 1em;
-      margin-bottom: 4px;
+  ion-card-content {
+    padding: 16px;
   }
+}
+/* 1. Container principal do header */
+ion-header {
+  display: flex;
+  justify-content: center;
+}
 
-  .activity-details {
-      font-size: 0.8em;
-  }
+/* 2. Toolbar com largura máxima */
+ion-toolbar {
+  --min-height: 70px;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
 
-  ion-tab-button ion-icon {
-      font-size: 1.2em;
-      margin-bottom: 2px;
-  }
+/* 3. Título centralizado */
+.app-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
 
-  ion-tab-button ion-label {
-      font-size: 0.7em;
-  }
+/* 4. Estilo da logo */
+.app-logo {
+  height: 40px; 
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
