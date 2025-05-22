@@ -16,7 +16,7 @@ import {
 } from '@ionic/react';
 import { shareSocialOutline } from 'ionicons/icons';
 import Footer from '../../components/Footer';
-//import '../Home.css';
+import './challenges.css'
 
 const challenges = [
   {

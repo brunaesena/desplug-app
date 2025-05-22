@@ -1,0 +1,124 @@
+/* Challenges.css - Versão Simplificada */
+
+/* Cores base consistentes */
+:root {
+  --ion-color-primary: #4a89dc;
+  --ion-color-primary-shade: #4178c2;
+}
+
+/* Estilos gerais */
+ion-content {
+  --background: #f8f9fa;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+/* Header */
+ion-toolbar {
+  --background: #ffffff;
+  --color: #333333;
+  --border-color: #e0e0e0;
+  --border-width: 0 0 1px 0;
+  --min-height: 70px;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333333;
+  gap: 10px;
+}
+
+.app-logo {
+  height: 30px;
+  width: auto;
+}
+
+/* Cards básicos */
+.challenge-card {
+  margin: 0 0 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+ion-card-header {
+  padding: 16px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+ion-card-content {
+  padding: 16px;
+}
+
+ion-card-content p {
+  color: #555555;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Botões base */
+.card-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+ion-button[expand="block"] {
+  --background: var(--ion-color-primary);
+  --background-hover: var(--ion-color-primary-shade);
+  --border-radius: 8px;
+  font-weight: 500;
+}
+
+ion-button[fill="clear"] {
+  --color: #7f8c8d;
+  --background-hover: rgba(127, 140, 141, 0.1);
+  width: 44px;
+}
+
+/* Alert básico */
+ion-alert {
+  --backdrop-opacity: 0.6;
+}
+
+.alert-wrapper {
+  border-radius: 12px !important;
+}
+
+/* Responsividade */
+@media (max-width: 400px) {
+  .card-buttons {
+    flex-direction: column;
+  }
+  
+  ion-button[expand="block"] {
+    width: 100%;
+  }
+  
+  ion-button[fill="clear"] {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.challenge-card {
+  transition: transform 0.2s;
+}
+.challenge-card:active {
+  transform: scale(0.98);
+}
