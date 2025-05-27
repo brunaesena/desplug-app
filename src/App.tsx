@@ -8,6 +8,10 @@ import Challenges from './pages/home/challenges'
 import Events from './pages/home/events'
 import Appointments from './pages/home/appointments'
 import Lectures from './pages/home/lectures'
+import CreateEvent from './pages/create/CreateEvent'
+import CreateLecture from './pages/create/CreateLecture'
+import CreateChallenge from './pages/create/CreateChallenge'
+import CreateConsultation from './pages/create/CreateConsultation'
 
 import '@ionic/react/css/core.css'
 import './theme/variables.css'
@@ -26,6 +30,10 @@ const App: React.FC = () => (
         <Route path="/eventos" element={<Events />} />
         <Route path="/consultorias" element={<Appointments />} />
         <Route path="/palestras" element={<Lectures />} />
+        <Route path="/criar/evento" element={<CreateEvent />} />
+        <Route path="/criar/palestra" element={<CreateLecture />} />
+        <Route path="/criar/desafio" element={<CreateChallenge />} />
+        <Route path="/criar/consultoria" element={<CreateConsultation />} />
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
