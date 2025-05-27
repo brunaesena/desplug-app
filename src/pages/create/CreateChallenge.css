@@ -1,0 +1,35 @@
+.create-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.create-form ion-item {
+  margin-bottom: 16px;
+  --background: transparent;
+}
+
+.create-form ion-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.create-form ion-input,
+.create-form ion-textarea,
+.create-form ion-select {
+  --background: #ffffff;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --border-radius: 8px;
+  margin-top: 8px;
+}
+
+.submit-button {
+  margin-top: 24px;
+}
+
+@media (max-width: 480px) {
+  .create-form {
+    padding: 16px;
+  }
+} 
