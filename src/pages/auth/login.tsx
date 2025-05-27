@@ -1,18 +1,17 @@
 import { useState } from 'react'
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonInput,
   IonButton,
   IonText,
+  IonItem,
   IonImg
 } from '@ionic/react'
-import { useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase'
+import './login.css'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -21,8 +20,6 @@ const Login = () => {
   const [error, setError] = useState('')
 
   const handleLogin = async () => {
-    setError('')
-
     try {
       await signInWithEmailAndPassword(auth, email, password)
       navigate('/home')
@@ -33,45 +30,54 @@ const Login = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-      </IonHeader>
-      <IonContent>
+      <IonContent className="ion-padding">
         <div className="login-container">
           <IonImg src="/logo.png" className="logo-img" />
 
-          <IonInput
-            placeholder="E-mail"
-            type="email"
-            value={email}
-            onIonChange={(e) => setEmail(e.detail.value!)}
-            className="input-field"
-            clearInput
-          />
-
-          <IonInput
-            placeholder="Senha"
-            type="password"
-            value={password}
-            onIonChange={(e) => setPassword(e.detail.value!)}
-            className="input-field"
-            clearInput
-          />
-
           {error && (
             <IonText color="danger">
-              <p style={{ textAlign: 'center' }}>{error}</p>
+              <p>{error}</p>
             </IonText>
           )}
 
-          <IonButton expand="full" onClick={handleLogin} className="login-button">
+          <IonItem className="input-field">
+            <IonInput
+              type="email"
+              value={email}
+              onIonChange={e => setEmail(e.detail.value!)}
+              required
+              clearInput={true}
+              placeholder="Email"
+            />
+          </IonItem>
+
+          <IonItem className="input-field">
+            <IonInput
+              type="password"
+              value={password}
+              onIonChange={e => setPassword(e.detail.value!)}
+              required
+              clearInput={true}
+              placeholder="Senha"
+            />
+          </IonItem>
+
+          <div className="forgot-password" onClick={() => navigate('/forgot-password')}>
+            Esqueceu a senha?
+          </div>
+
+          <IonButton className="login-btn" expand="block" onClick={handleLogin}>
             Entrar
           </IonButton>
 
-          <IonText className="text-footer">
+          <div className="text-footer">
             <p>
-              Não tem uma conta? <span onClick={() => navigate('/register')} style={{ color: '#4fcdfc', cursor: 'pointer' }}>Registre-se aqui</span>
+              Não tem uma conta?{' '}
+              <span onClick={() => navigate('/register')}>
+                Cadastre-se aqui
+              </span>
             </p>
-          </IonText>
+          </div>
         </div>
       </IonContent>
     </IonPage>

@@ -1,133 +1,131 @@
-  .login-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-    height: 100%;
-  }
-  
-  .logo-img {
-    width: 150px;
-    margin-bottom: 20px;
-  }
-  .slogan {
-    font-size: 14px;
-    color: #333;
-    text-align: center;
-    font-weight: bold;
-  }
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fcfcfc;
+  height: 100%;
+  padding: 24px;
+}
 
-  ion-input.input,
-  ion-select.input {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    --padding-start: 15px;
-    --padding-end: 15px;
-    width: 100%;
-  }
+.logo-img {
+  width: 200px;
+  margin-bottom: 20px;
+}
 
-  .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
+/* Estilos para os campos de input */
+ion-item {
+  width: 100%;
+  max-width: 320px;
+  background: white !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  --background: white;
+  --border-color: transparent;
+  --highlight-height: 0;
+  --border-radius: 10px;
+  --min-height: 50px;
+  display: flex;
+  align-items: center;
+}
 
-  .forgot {
-    font-size: 13px;
-    margin-bottom: 10px;
-    text-align: center;
-    color: #444;
-  }
+ion-input {
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --placeholder-color: #666;
+  text-align: left;
+}
 
-  ion-button.login-button {
-    --background: #4fcdfc;
-    --border-radius: 8px;
-  }
+.login-btn {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 20px;
+  height: 48px;
+  font-weight: 600;
+  --background: #4fcdfc !important;
+  --background-activated: #4fcdfc !important;
+  --background-hover: #4fcdfc !important;
+  --border-radius: 10px;
+}
 
-  .input-field {
-    margin-bottom: 16px;
-    width: 100%;
-    max-width: 320px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    --padding-start: 15px;
-    --padding-end: 15px;
-  }
+.text-footer {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+  max-width: 320px;
+}
 
-  .login-btn {
-    margin-top: 12px;
-  }
+.text-footer span {
+  color: #4fcdfc;
+  cursor: pointer;
+}
 
-  .text-footer {
-    margin-top: 20px;
-    font-size: 14px;
-    text-align: center;
-  }
+.forgot-password {
+  width: 100%;
+  max-width: 320px;
+  text-align: right;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
 
-  .register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fcfcfc;
-    height: 100%;
-    padding: 20px;
-  }
+/* Estilo para mensagens de erro */
+ion-text[color="danger"] {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 8px 0;
+  text-align: center;
+  font-size: 14px;
+}
 
-  ion-input.input,
-  ion-select.input {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    --padding-start: 15px;
-    --padding-end: 15px;
-    width: 100%;
-  }
+.slogan {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+}
 
-  ion-button.register-button {
-    --background: #4fcdfc;
-    --border-radius: 8px;
-  }
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
 
-  .login-link {
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
-  }
+.forgot {
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #444;
+}
 
-  .login-link span {
-    color: #4fcdfc;
-    cursor: pointer;
-  }
+.login-link {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
 
-  .register-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-    height: 100%;
-  }
+.login-link span {
+  color: #4fcdfc;
+  cursor: pointer;
+}
 
-  .register-btn {
-    margin-top: 12px;
-    width: 100%;
-    max-width: 320px;
-    --background: #4fcdfc;
-    --border-radius: 8px;
-  }
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  height: 100%;
+}
 
-  .text-footer {
-    margin-top: 20px;
-    font-size: 14px;
-    text-align: center;
-    max-width: 320px;
-  }
-
-  .text-footer span {
-    color: #4fcdfc;
-    cursor: pointer;
-  }
+.register-btn {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 320px;
+  --background: #4fcdfc;
+  --border-radius: 8px;
+}
