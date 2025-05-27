@@ -37,7 +37,7 @@ const Login = () => {
       </IonHeader>
       <IonContent>
         <div className="login-container">
-          <IonImg src="/logo.png" className="logo logo-box" />
+          <IonImg src="/logo.png" className="logo-img" />
 
           <IonInput
             placeholder="E-mail"
