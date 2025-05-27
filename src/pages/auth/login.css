@@ -1,26 +1,16 @@
   .login-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #fcfcfc;
+    padding: 24px;
     height: 100%;
-    padding: 20px;
   }
-
-  .logo-box {
-    text-align: center;
+  
+  .logo-img {
+    width: 150px;
     margin-bottom: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
-
-  .logo {
-    max-width: 180px;
-    margin-bottom: 8px;
-  }
-
   .slogan {
     font-size: 14px;
     color: #333;
