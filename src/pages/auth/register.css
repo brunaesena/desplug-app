@@ -1,10 +1,11 @@
 .register-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #fcfcfc;
     height: 100%;
-    padding: 20px;
+    padding: 24px;
   }
   
   ion-input.input,
@@ -22,17 +23,8 @@
     --border-radius: 8px;
   }
 
-  .register-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-    height: 100%;
-  }
-  
   .logo-img {
-    width: 150px;
+    width: 200px;
     margin-bottom: 20px;
   }
   
@@ -48,11 +40,15 @@
   }
   
   .register-btn {
-    margin-top: 12px;
     width: 100%;
     max-width: 320px;
-    --background: #4fcdfc;
-    --border-radius: 8px;
+    margin-top: 20px;
+    height: 48px;
+    font-weight: 600;
+    --background: #4fcdfc !important;
+    --background-activated: #4fcdfc !important;
+    --background-hover: #4fcdfc !important;
+    --border-radius: 10px;
   }
   
   .text-footer {
@@ -77,4 +73,144 @@
     padding: 10px 15px;
     display: flex;
     align-items: center;
+    --inner-padding-end: 40px;
+  }
+
+  .checkbox-item ion-label {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
+  /* Estilos para os campos de input */
+  ion-item {
+    width: 100%;
+    max-width: 320px;
+    background: white !important;
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    --background: white;
+    --border-color: transparent;
+    --highlight-height: 0;
+    --border-radius: 10px;
+    --min-height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Estilo para o label flutuante */
+  ion-item ion-label {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #666;
+  }
+
+  /* Estilo quando o input está focado */
+  ion-item.item-has-focus ion-label {
+    color: #4fcdfc;
+  }
+
+  /* Estilo quando o input tem valor */
+  ion-item.item-has-value ion-label {
+    color: #666;
+  }
+
+  ion-item.item-floating ion-label {
+    transform: translate3d(0, 0, 0) scale(0.75);
+  }
+
+  ion-input {
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --placeholder-color: #666;
+    text-align: left;
+  }
+
+  ion-input::part(placeholder) {
+    text-align: center;
+  }
+
+  ion-item.provider-field {
+    margin-top: 8px;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  /* Animação para os campos de provider */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Estilo para o select de ano */
+  ion-select {
+    width: 100%;
+    text-align: left;
+    --placeholder-color: #666;
+    padding-left: 15px;
+  }
+
+  ion-select::part(placeholder) {
+    text-align: center;
+  }
+
+  ion-select::part(text) {
+    text-align: center;
+  }
+
+  ion-item.provider-field ion-select {
+    padding-right: 15px;
+  }
+
+  ion-select::part(icon) {
+    color: #4fcdfc;
+    opacity: 1;
+    position: absolute;
+    right: 40px;
+    border-color: #4fcdfc;
+    bor
+  }
+
+  /* Estilo para o checkbox */
+  ion-checkbox {
+    --size: 20px;
+    --checkbox-background-checked: #4fcdfc;
+    margin-right: 10px;
+  }
+
+  /* Estilo para mensagens de erro */
+  ion-text[color="danger"] {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 8px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  /* Estilo para os botões */
+  ion-button {
+    width: 100%;
+    max-width: 320px;
+    height: 48px;
+    --background: #4fcdfc;
+    --border-radius: 10px;
+    font-size: 16px;
+    margin: 8px 0;
+  }
+
+  ion-button[fill="clear"] {
+    --color: #4fcdfc;
+    font-size: 14px;
+  }
+
+  /* Animação para os campos adicionais */
+  .register-container ion-item {
+    transition: all 0.3s ease;
   }
