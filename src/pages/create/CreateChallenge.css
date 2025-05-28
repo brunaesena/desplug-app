@@ -1,35 +1,259 @@
+/* Variáveis de cores e estilos baseados na paleta solicitada */
+:root {
+  --color-white: #fcfcfc;
+  --color-primary: #4fcdfc;
+  --color-secondary: #6ac2e2;
+  --color-tertiary: #85b7c9;
+  --color-neutral: #a1adb0;
+  
+  --primary-gradient: linear-gradient(90deg, #4fcdfc 0%, #6ac2e2 100%);
+  --secondary-gradient: linear-gradient(90deg, #6ac2e2 0%, #85b7c9 100%);
+  
+  --success-color: #4fcdfc;
+  --warning-color: #6ac2e2;
+  --danger-color: #85b7c9;
+  
+  --text-color: #2c3e50;
+  --text-light: #5e6c77;
+  --border-color: #e2e8f0;
+  --background-light: #f5f7fa;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  --border-radius: 8px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* Estilos gerais da página */
+ion-content {
+  --background: var(--color-white);
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Cabeçalho */
+.header-toolbar {
+  --background: var(--color-white);
+  --color: var(--text-color);
+  --border-color: transparent;
+  --box-shadow: var(--shadow-sm);
+}
+
+/* Formulário */
 .create-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 0;
+  margin: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: box-shadow var(--transition-normal);
 }
 
-.create-form ion-item {
-  margin-bottom: 16px;
-  --background: transparent;
+.create-form:hover {
+  box-shadow: var(--shadow-lg);
 }
 
-.create-form ion-label {
-  font-weight: 500;
+/* Introdução do formulário */
+.form-intro {
+  background: var(--primary-gradient);
+  color: var(--color-white);
+  padding: 24px;
+  text-align: center;
+}
+
+.form-intro h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 12px 0 8px;
+}
+
+.form-intro p {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.form-icon {
+  font-size: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 12px;
   margin-bottom: 8px;
 }
 
-.create-form ion-input,
-.create-form ion-textarea,
-.create-form ion-select {
-  --background: #ffffff;
+/* Itens do formulário */
+.custom-item {
   --padding-start: 16px;
   --padding-end: 16px;
-  --border-radius: 8px;
-  margin-top: 8px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --inner-padding-end: 0;
+  --background: transparent;
+  --border-color: var(--color-tertiary);
+  --border-width: 0 0 1px 0;
+  margin-bottom: 8px;
 }
 
+.custom-item.has-error {
+  --border-color: var(--danger-color);
+}
+
+.custom-item.has-error ion-label {
+  color: var(--danger-color);
+}
+
+.custom-input, .custom-textarea, .custom-select {
+  --padding-start: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --placeholder-color: var(--color-neutral);
+  --placeholder-opacity: 0.8;
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.custom-textarea {
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+/* Mensagens de erro */
+.error-message {
+  color: var(--danger-color);
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/* Preview de dificuldade */
+.difficulty-preview {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--background-light);
+  border-radius: var(--border-radius);
+  margin: 16px 16px 0;
+  border: 1px solid var(--color-tertiary);
+}
+
+.difficulty-preview span {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.difficulty-badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* Cores específicas para os badges de dificuldade */
+ion-badge[color="success"] {
+  --ion-color-base: var(--success-color) !important;
+  --ion-color-contrast: var(--color-white) !important;
+}
+
+ion-badge[color="warning"] {
+  --ion-color-base: var(--warning-color) !important;
+  --ion-color-contrast: var(--color-white) !important;
+}
+
+ion-badge[color="danger"] {
+  --ion-color-base: var(--danger-color) !important;
+  --ion-color-contrast: var(--color-white) !important;
+}
+
+/* Botão de envio */
 .submit-button {
-  margin-top: 24px;
+  --background: var(--primary-gradient);
+  --background-hover: linear-gradient(90deg, #3bb8e5 0%, #5aadcc 100%);
+  --background-activated: linear-gradient(90deg, #2aa6d3 0%, #4a9dbc 100%);
+  --border-radius: var(--border-radius);
+  --box-shadow: 0 4px 6px rgba(79, 205, 252, 0.25);
+  --color: var(--color-white);
+  margin: 24px 16px 16px;
+  height: 48px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-@media (max-width: 480px) {
+.submit-button:hover:not(.button-disabled) {
+  --box-shadow: 0 6px 10px rgba(79, 205, 252, 0.35);
+  transform: translateY(-2px);
+}
+
+.submit-button.button-disabled {
+  --background: var(--color-neutral);
+  --color: var(--color-white);
+  --box-shadow: none;
+  opacity: 0.7;
+}
+
+/* Toast de sucesso */
+.success-toast {
+  --background: var(--color-primary);
+  --color: var(--color-white);
+  --border-radius: var(--border-radius);
+  --box-shadow: var(--shadow-md);
+  font-weight: 500;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
   .create-form {
-    padding: 16px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
-} 
+  
+  .submit-button {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.difficulty-preview {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Estilos específicos para o Footer */
+ion-footer {
+  --background: var(--primary-gradient);
+}
+
+/* Estilos para os botões do cabeçalho */
+ion-buttons ion-button {
+  --color: var(--color-primary);
+}
+
+ion-back-button {
+  --color: var(--color-primary);
+}
+
+/* Ajustes para os labels */
+ion-label {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* Estilo para o foco nos inputs */
+.custom-input:focus, .custom-textarea:focus, .custom-select:focus {
+  --border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(79, 205, 252, 0.2);
+}
