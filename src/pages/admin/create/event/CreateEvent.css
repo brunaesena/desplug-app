@@ -1,0 +1,171 @@
+.create-form {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-form ion-item {
+  width: 100%;
+  margin-bottom: 16px;
+  --background: var(--ion-background-color);
+  --border-radius: 12px;
+  --border-width: 2px;
+  --border-style: solid;
+  --border-color: #e0e0e0;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.create-form ion-item:hover,
+.create-form ion-item:focus-within {
+  --border-color: #4fcdfc;
+  transition: all 0.3s ease;
+}
+
+.create-form ion-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ion-color-dark);
+  margin-bottom: 8px;
+}
+
+.create-form ion-input,
+.create-form ion-textarea {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-size: 1rem;
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 0.7;
+}
+
+.create-form ion-textarea {
+  min-height: 120px;
+}
+
+.submit-button {
+  width: 100%;
+  margin: 24px 0;
+  --background: #4fcdfc;
+  --color: white;
+  --border-radius: 10px;
+  --box-shadow: 0 4px 12px rgba(79, 205, 252, 0.2);
+  height: 40px;
+  font-size: 14px;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.datetime-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+ion-datetime {
+  --background: #ffffff;
+  border-radius: 15px;
+  margin: 0;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 100%;
+}
+
+/* Estilo do cabeçalho do DateTime */
+ion-datetime::part(header) {
+  background: #4fcdfc;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Estilo dos botões Confirmar e Cancelar */
+ion-datetime::part(buttons) {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 8px;
+}
+
+ion-datetime::part(button) {
+  color: #4fcdfc;
+  font-weight: 600;
+}
+
+ion-datetime::part(button:hover) {
+  opacity: 0.8;
+}
+
+ion-datetime::part(navigation) {
+  color: #4fcdfc;
+}
+
+ion-datetime::part(calendar-day selected) {
+  background: #4fcdfc;
+  color: white;
+}
+
+ion-datetime::part(calendar-day today) {
+  color: #4fcdfc;
+}
+
+ion-datetime::part(wheel-item) {
+  color: #2c3e50;
+}
+
+ion-datetime::part(wheel-item active) {
+  color: #4fcdfc;
+  font-weight: 600;
+}
+
+.date-time-selected {
+  color: #2c3e50 !important;
+  font-weight: normal;
+}
+
+.date-time-placeholder {
+  color: var(--ion-color-medium);
+  opacity: 0.7;
+}
+
+/* Header styles */
+ion-header ion-toolbar {
+  --background: white;
+  --border-width: 0;
+  --min-height: 60px;
+  padding: 8px 0;
+}
+
+ion-header ion-title {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .create-form {
+    padding: 16px;
+  }
+  
+  .create-form ion-item {
+    margin-bottom: 16px;
+  }
+  
+  .submit-button {
+    margin: 24px 0;
+  }
+
+  ion-datetime {
+    width: calc(100% - 32px);
+  }
+}

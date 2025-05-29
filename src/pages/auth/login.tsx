@@ -11,10 +11,10 @@ import {
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase'
 import './login.css'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Login = () => {
-  const navigate = useNavigate()
+  const history = useHistory()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -22,7 +22,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      navigate('/home')
+      history.push('/home')
     } catch (err: any) {
       setError(err.message)
     }
@@ -62,7 +62,7 @@ const Login = () => {
             />
           </IonItem>
 
-          <div className="forgot-password" onClick={() => navigate('/forgot-password')}>
+          <div className="forgot-password" onClick={() => history.push('/forgot-password')}>
             Esqueceu a senha?
           </div>
 
@@ -73,7 +73,7 @@ const Login = () => {
           <div className="text-footer">
             <p>
               Não tem uma conta?{' '}
-              <span onClick={() => navigate('/register')}>
+              <span onClick={() => history.push('/register')}>
                 Cadastre-se aqui
               </span>
             </p>

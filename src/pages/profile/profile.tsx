@@ -14,8 +14,8 @@ import {
 } from '@ionic/react'
 import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
-import { useNavigate } from 'react-router-dom'
-import { personCircleOutline, mailOutline, callOutline, schoolOutline } from 'ionicons/icons'
+import { useHistory } from 'react-router-dom'
+import { personCircleOutline, mailOutline, callOutline, schoolOutline, navigate } from 'ionicons/icons'
 import { auth, db } from '../../firebase'
 import Footer from '../../components/Footer'
 import './profile.css'
@@ -32,7 +32,7 @@ interface UserData {
 }
 
 const Profile = () => {
-  const navigate = useNavigate()
+  const history = useHistory()
   const [userData, setUserData] = useState<UserData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -41,7 +41,7 @@ const Profile = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         setLoading(false)
-        navigate('/login')
+        history.push('/login')
         return
       }
 
@@ -74,7 +74,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     await signOut(auth)
-    navigate('/login')
+    history.push('/login')
   }
 
   return (

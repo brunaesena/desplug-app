@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   IonPage,
   IonContent,
@@ -16,53 +16,100 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonIcon
+  IonIcon,
+  IonSpinner
 } from '@ionic/react';
 import { chevronBackOutline } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
+import { getAllLectures, subscribeToActivity, isUserSubscribed } from '../../utils/firestore';
+import { auth } from '../../firebase';
+import type { Lecture } from '../../types/firestore';
 import Footer from '../../components/Footer';
 import './shared-styles.css'
 
-const lectures = [
-  {
-    title: 'A Importância da Desconexão Digital',
-    description: 'Entenda como o uso excessivo de tecnologia impacta a saúde mental e estratégias para equilibrar.'
-  },
-  {
-    title: 'Tecnologia e Bem-Estar na Juventude',
-    description: 'Palestra voltada para estudantes sobre como criar hábitos saudáveis com o uso de telas.'
-  },
-  {
-    title: 'Famílias e o Desafio da Era Digital',
-    description: 'Um olhar para os conflitos e soluções familiares relacionados ao uso constante de dispositivos.'
-  }
-];
-
 const Lectures: React.FC = () => {
-  const [selectedLecture, setSelectedLecture] = useState<string | null>(null);
+  const [lectures, setLectures] = useState<Lecture[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedLecture, setSelectedLecture] = useState<Lecture | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isRepresentative, setIsRepresentative] = useState(false);
   const [contactPhone, setContactPhone] = useState('');
   const [location, setLocation] = useState('');
+  const [subscribedLectures, setSubscribedLectures] = useState<Set<string>>(new Set());
 
-  const handleSubscribe = (title: string) => {
-    setSelectedLecture(title);
+  useEffect(() => {
+    const fetchLectures = async () => {
+      try {
+        const lecturesData = await getAllLectures();
+        setLectures(lecturesData);
+
+        // Check subscription status for each lecture
+        const userId = auth.currentUser?.uid;
+        if (userId) {
+          const subscriptionPromises = lecturesData.map(lecture => 
+            isUserSubscribed(userId, lecture.id)
+          );
+          const subscriptionResults = await Promise.all(subscriptionPromises);
+          const subscribedIds = new Set(
+            lecturesData
+              .filter((_, index) => subscriptionResults[index])
+              .map(lecture => lecture.id)
+          );
+          setSubscribedLectures(subscribedIds);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar palestras:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLectures();
+  }, []);
+
+  const handleSubscribe = (lecture: Lecture) => {
+    setSelectedLecture(lecture);
     setShowModal(true);
   };
 
-  const handleConfirm = () => {
-    // Aqui você pode salvar no banco ou enviar para API
-    console.log('Palestra:', selectedLecture);
-    if (isRepresentative) {
-      console.log('Telefone:', contactPhone);
-      console.log('Local desejado:', location);
+  const handleConfirm = async () => {
+    if (!selectedLecture || !auth.currentUser?.uid) return;
+
+    try {
+      await subscribeToActivity(
+        auth.currentUser.uid,
+        selectedLecture.id,
+        'lecture',
+        isRepresentative ? {
+          isRepresentative,
+          contactPhone,
+          preferredLocation: location
+        } : undefined
+      );
+
+      setSubscribedLectures(prev => new Set([...prev, selectedLecture.id]));
+      alert(`Inscrição confirmada para: ${selectedLecture.title}`);
+    } catch (error) {
+      console.error('Erro ao se inscrever na palestra:', error);
+      alert('Erro ao confirmar inscrição. Tente novamente.');
     }
-    // Resetar
+
+    // Reset form
     setShowModal(false);
     setIsRepresentative(false);
     setContactPhone('');
     setLocation('');
-    alert(`Inscrição confirmada para: ${selectedLecture}`);
+  };
+
+  const formatDateTime = (timestamp: any) => {
+    const date = timestamp.toDate();
+    return date.toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   return (
@@ -78,19 +125,47 @@ const Lectures: React.FC = () => {
           Voltar
         </Link>
         <div className="ion-content-inner">
-          {lectures.map((lecture, index) => (
-            <IonCard key={index}>
-              <IonCardHeader>
-                <IonCardTitle>{lecture.title}</IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <p>{lecture.description}</p>
-                <IonButton expand="block" onClick={() => handleSubscribe(lecture.title)}>
-                  Inscrever-se
-                </IonButton>
-              </IonCardContent>
-            </IonCard>
-          ))}
+          {loading ? (
+            <div className="ion-text-center ion-padding">
+              <IonSpinner />
+              <p>Carregando palestras...</p>
+            </div>
+          ) : lectures.length === 0 ? (
+            <div className="ion-text-center ion-padding">
+              <p>Nenhuma palestra disponível no momento.</p>
+            </div>
+          ) : (
+            lectures.map((lecture) => (
+              <IonCard key={lecture.id}>
+                <IonCardHeader>
+                  <IonCardTitle>{lecture.title}</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <p>{lecture.description}</p>
+                  <p className="event-details">
+                    <strong>Data e Hora:</strong> {formatDateTime(lecture.date)}
+                  </p>
+                  <p className="event-details">
+                    <strong>Local:</strong> {lecture.location}
+                  </p>
+                  {lecture.isLocationFlexible && (
+                    <p className="event-details ion-text-info">
+                      Esta palestra pode ser realizada em outras instituições
+                    </p>
+                  )}
+                  {subscribedLectures.has(lecture.id) ? (
+                    <IonButton expand="block" color="success" disabled>
+                      Inscrito
+                    </IonButton>
+                  ) : (
+                    <IonButton expand="block" onClick={() => handleSubscribe(lecture)}>
+                      Inscrever-se
+                    </IonButton>
+                  )}
+                </IonCardContent>
+              </IonCard>
+            ))
+          )}
         </div>
 
         <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
@@ -100,42 +175,50 @@ const Lectures: React.FC = () => {
             </IonToolbar>
           </IonHeader>
           <IonContent className="ion-padding">
-            <p>Deseja se inscrever na palestra: <strong>{selectedLecture}</strong>?</p>
+            {selectedLecture && (
+              <>
+                <p>Deseja se inscrever na palestra: <strong>{selectedLecture.title}</strong>?</p>
+                <p>Data: {formatDateTime(selectedLecture.date)}</p>
+                <p>Local: {selectedLecture.location}</p>
 
-            <IonItem>
-              <IonCheckbox
-                checked={isRepresentative}
-                onIonChange={(e) => setIsRepresentative(e.detail.checked)}
-              />
-              <IonLabel className="ion-margin-start">
-                Sou professor/representante e desejo realizar a palestra na minha instituição
-              </IonLabel>
-            </IonItem>
+                {selectedLecture.isLocationFlexible && (
+                  <IonItem>
+                    <IonCheckbox
+                      checked={isRepresentative}
+                      onIonChange={(e) => setIsRepresentative(e.detail.checked)}
+                    />
+                    <IonLabel className="ion-margin-start">
+                      Sou professor/representante e desejo realizar a palestra na minha instituição
+                    </IonLabel>
+                  </IonItem>
+                )}
 
-            {isRepresentative && (
-              <IonList>
-                <IonItem>
-                  <IonLabel position="stacked">Telefone para contato</IonLabel>
-                  <IonInput
-                    type="tel"
-                    value={contactPhone}
-                    onIonChange={(e) => setContactPhone(e.detail.value!)}
-                  />
-                </IonItem>
-                <IonItem>
-                  <IonLabel position="stacked">Local desejado</IonLabel>
-                  <IonInput
-                    value={location}
-                    onIonChange={(e) => setLocation(e.detail.value!)}
-                  />
-                </IonItem>
-              </IonList>
+                {isRepresentative && (
+                  <IonList>
+                    <IonItem>
+                      <IonLabel position="stacked">Telefone para contato</IonLabel>
+                      <IonInput
+                        type="tel"
+                        value={contactPhone}
+                        onIonChange={(e) => setContactPhone(e.detail.value!)}
+                      />
+                    </IonItem>
+                    <IonItem>
+                      <IonLabel position="stacked">Local desejado</IonLabel>
+                      <IonInput
+                        value={location}
+                        onIonChange={(e) => setLocation(e.detail.value!)}
+                      />
+                    </IonItem>
+                  </IonList>
+                )}
+
+                <div className="ion-padding-top">
+                  <IonButton expand="block" onClick={handleConfirm}>Confirmar</IonButton>
+                  <IonButton expand="block" fill="clear" onClick={() => setShowModal(false)}>Cancelar</IonButton>
+                </div>
+              </>
             )}
-
-            <div className="ion-padding-top">
-              <IonButton expand="block" onClick={handleConfirm}>Confirmar</IonButton>
-              <IonButton expand="block" fill="clear" onClick={() => setShowModal(false)}>Cancelar</IonButton>
-            </div>
           </IonContent>
         </IonModal>
       </IonContent>

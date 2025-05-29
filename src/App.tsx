@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { IonApp, setupIonicReact } from '@ionic/react'
+import { IonReactRouter } from '@ionic/react-router'
 import Home from './pages/Home'
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
@@ -8,10 +9,12 @@ import Challenges from './pages/home/challenges'
 import Events from './pages/home/events'
 import Appointments from './pages/home/appointments'
 import Lectures from './pages/home/lectures'
-import CreateEvent from './pages/create/CreateEvent'
-import CreateLecture from './pages/create/CreateLecture'
-import CreateChallenge from './pages/create/CreateChallenge'
-import CreateAppointment from './pages/create/CreateAppointment'
+import Activities from './pages/activity/activities'
+import CreateEvent from './pages/admin/create/event/CreateEvent'
+import CreateLecture from './pages/admin/create/lecture/CreateLecture'
+import CreateChallenge from './pages/admin/create/challenge/CreateChallenge'
+import CreateAppointment from './pages/admin/create/appointment/CreateAppointment'
+import Create from './pages/admin/create/create'
 
 import '@ionic/react/css/core.css'
 import './theme/variables.css'
@@ -21,23 +24,32 @@ setupIonicReact()
 
 const App: React.FC = () => (
   <IonApp>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/desafios" element={<Challenges />} />
-        <Route path="/eventos" element={<Events />} />
-        <Route path="/consultorias" element={<Appointments />} />
-        <Route path="/palestras" element={<Lectures />} />
-        <Route path="/criar/evento" element={<CreateEvent />} />
-        <Route path="/criar/palestra" element={<CreateLecture />} />
-        <Route path="/criar/desafio" element={<CreateChallenge />} />
-        <Route path="/criar/consultoria" element={<CreateAppointment />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <IonReactRouter>
+      <Switch>
+        {/* Rotas de autenticação */}
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        
+        {/* Rotas principais */}
+        <Route path="/home" component={Home} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/desafios" component={Challenges} />
+        <Route path="/eventos" component={Events} />
+        <Route path="/consultorias" component={Appointments} />
+        <Route path="/palestras" component={Lectures} />
+        <Route path="/atividades" component={Activities} />
+        
+        {/* Rotas administrativas */}
+        <Route path="/admin/criar" exact component={Create} />
+        <Route path="/admin/criar/evento" component={CreateEvent} />
+        <Route path="/admin/criar/palestra" component={CreateLecture} />
+        <Route path="/admin/criar/desafio" component={CreateChallenge} />
+        <Route path="/admin/criar/consulta" component={CreateAppointment} />
+        
+        {/* Rota padrão */}
+        <Route exact path="/" render={() => <Redirect to="/login" />} />
+      </Switch>
+    </IonReactRouter>
   </IonApp>
 )
 

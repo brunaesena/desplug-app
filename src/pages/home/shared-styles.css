@@ -1,8 +1,8 @@
 .ion-content-inner {
     width: 100%;
-    max-width: 320px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 16px;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -155,70 +155,108 @@ ion-header ion-title {
     z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 4px;
-    color: #4fcdfc;
-    background: transparent;
-    border: none;
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 4px;
-    cursor: pointer;
     text-decoration: none;
+    color: var(--ion-color-medium);
+    padding: 1rem;
+    font-size: 1rem;
 }
 
 .back-button ion-icon {
-    font-size: 24px;
-    margin-right: -4px;
+    margin-right: 0.5rem;
 }
 
 .back-button:hover {
     opacity: 0.9;
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    ion-card {
-        --background: rgba(26, 31, 37, 0.95);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+.event-details {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+}
 
-    ion-card-title {
-        color: #fcfcfc;
-    }
+.event-details strong {
+    color: var(--ion-color-dark);
+}
 
-    ion-card-content p {
-        color: #a1adb0;
-    }
+.ion-text-info {
+    color: var(--ion-color-primary);
+    font-style: italic;
+}
 
-    ion-header ion-toolbar {
-        --background: rgba(26, 31, 37, 0.95);
-    }
+/* Challenge specific styles */
+.difficulty-info {
+    margin: 0.5rem 0 1rem;
+}
 
-    ion-header ion-title {
-        color: #f5f7f9;
-    }
+.difficulty-info ion-badge {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-weight: 500;
+}
 
-    .back-button {
-        position: fixed;
-        top: 16px;
-        left: 16px;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        color: #4fcdfc;
-        background: transparent;
-        border: none;
-        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 8px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    
-    .back-button:hover {
-        opacity: 0.9;
-    }
+/* Appointment specific styles */
+.time-slots {
+    margin: 1rem 0;
+}
+
+.time-slots h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+.time-slots h4 ion-icon {
+    font-size: 1.1rem;
+}
+
+.time-slot-info {
+    margin: 0.5rem 0;
+}
+
+.time-slot-info ion-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    --background: var(--ion-color-primary-tint);
+    --color: var(--ion-color-primary-contrast);
+}
+
+.challenge-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.challenge-buttons ion-button[expand="block"] {
+    --background: #4fcdfc;
+    --color: white;
+    flex: 1;
+    max-width: calc(100% - 48px);
+    margin: 0;
+    height: 40px;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.challenge-buttons ion-button[fill="clear"] {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    --color: var(--ion-color-primary);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.challenge-buttons ion-button[fill="clear"] ion-icon {
+    font-size: 18px;
 }

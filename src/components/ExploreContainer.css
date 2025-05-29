@@ -271,52 +271,6 @@ ion-card-content {
   100% { background-position: -200% 0; }
 }
 
-/* ============= DARK MODE ============= */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: #fcfcfc;
-    --color-text-light: #a1adb0;
-    --color-bg: #1a1f25;
-    --color-card: rgba(26, 31, 37, 0.95);
-    --color-border: #2c3e50;
-  }
-
-  ion-toolbar {
-    --background: rgba(26, 31, 37, 0.95);
-  }
-
-  .info-card {
-    --background: linear-gradient(135deg, rgba(79, 205, 252, 0.15) 0%, rgba(26, 31, 37, 0.95) 100%);
-  }
-
-  .challenges-card {
-    --background: linear-gradient(135deg, rgba(79, 205, 252, 0.15) 0%, rgba(26, 31, 37, 0.95) 100%);
-  }
-
-  .events-card {
-    --background: linear-gradient(135deg, rgba(106, 194, 226, 0.15) 0%, rgba(26, 31, 37, 0.95) 100%);
-  }
-
-  .consultancies-card {
-    --background: linear-gradient(135deg, rgba(133, 183, 201, 0.15) 0%, rgba(26, 31, 37, 0.95) 100%);
-  }
-
-  .lectures-card {
-    --background: linear-gradient(135deg, rgba(161, 173, 176, 0.15) 0%, rgba(26, 31, 37, 0.95) 100%);
-  }
-
-  ion-card {
-    border-color: rgba(252, 252, 252, 0.05);
-  }
-
-  .skeleton-loading {
-    background: linear-gradient(90deg, 
-      rgba(50, 50, 50, 0.9) 25%, 
-      rgba(70, 70, 70, 0.9) 50%, 
-      rgba(50, 50, 50, 0.9) 75%);
-  }
-}
-
 /* ============= RESPONSIVIDADE ============= */
 @media (max-width: 576px) {
   .activities-title {
