@@ -7,17 +7,33 @@ import {
   IonContent,
   IonButton,
   IonText,
-  IonSpinner
+  IonSpinner,
+  IonIcon,
+  IonCard,
+  IonCardContent
 } from '@ionic/react'
 import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
+import { personCircleOutline, mailOutline, callOutline, schoolOutline } from 'ionicons/icons'
 import { auth, db } from '../../firebase'
 import Footer from '../../components/Footer'
+import './profile.css'
+
+interface UserData {
+  name: string
+  email: string
+  phone: string
+  type: 'admin' | 'user'
+  isProvider: boolean
+  profession?: string | null
+  degree?: string | null
+  graduationYear?: number | null
+}
 
 const Profile = () => {
   const navigate = useNavigate()
-  const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
+  const [userData, setUserData] = useState<UserData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -34,15 +50,15 @@ const Profile = () => {
         const snap = await getDoc(ref)
 
         if (snap.exists()) {
-          const data = snap.data()
-          setUserData({
-            name: data.name,
-            email: data.email,
-          })
+          const data = snap.data() as UserData
+          setUserData(data)
         } else {
           setUserData({
             name: 'Desconhecido',
             email: user.email || '',
+            phone: '',
+            type: 'user',
+            isProvider: false
           })
         }
       } catch (err) {
@@ -54,7 +70,7 @@ const Profile = () => {
     })
 
     return () => unsubscribe()
-  }, [history])
+  }, [navigate])
 
   const handleLogout = async () => {
     await signOut(auth)
@@ -63,34 +79,60 @@ const Profile = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Perfil</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent className="ion-padding">
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
+          <div className="loading-container">
             <IonSpinner name="crescent" />
           </div>
         ) : error ? (
-          <div style={{ textAlign: 'center', marginTop: 20 }}>
+          <div className="error-container">
             <IonText color="danger"><p>{error}</p></IonText>
           </div>
         ) : (
-          <div style={{ textAlign: 'center' }}>
-            <IonText>
-              <h2>{userData?.name}</h2>
-              <p>{userData?.email}</p>
-            </IonText>
+          <div className="profile-container">
+            <IonCard className="profile-card">
+              <IonCardContent>
+                <div className="profile-header">
+                  <IonIcon icon={personCircleOutline} className="profile-avatar" />
+                  <h2>{userData?.name}</h2>
+                  <IonText color="medium">
+                    <p>{userData?.isProvider ? 'Prestador de Serviço' : 'Usuário'}</p>
+                  </IonText>
+                </div>
 
-            <IonButton expand="block" color="medium" onClick={() => alert('Função ainda não implementada')}>
-              Editar informações
-            </IonButton>
+                <div className="profile-info">
+                  <div className="info-item">
+                    <IonIcon icon={mailOutline} />
+                    <p>{userData?.email}</p>
+                  </div>
 
-            <IonButton expand="block" color="danger" onClick={handleLogout}>
-              Sair da conta
-            </IonButton>
+                  <div className="info-item">
+                    <IonIcon icon={callOutline} />
+                    <p>{userData?.phone || 'Não informado'}</p>
+                  </div>
+
+                  {userData?.isProvider && (
+                    <>
+                      <div className="info-item">
+                        <IonIcon icon={schoolOutline} />
+                        <p>{userData.profession || 'Não informado'}</p>
+                      </div>
+                      <div className="info-item">
+                        <IonIcon icon={schoolOutline} />
+                        <p>{`${userData.degree || 'Não informado'} ${userData.graduationYear ? `(${userData.graduationYear})` : ''}`}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </IonCardContent>
+            </IonCard>
+
+            <div className="profile-actions">
+
+              <IonButton expand="block" color="danger" onClick={handleLogout}>
+                Sair da conta
+              </IonButton>
+            </div>
           </div>
         )}
       </IonContent>

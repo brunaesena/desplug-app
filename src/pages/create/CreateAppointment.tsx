@@ -15,9 +15,9 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import Footer from '../../components/Footer';
-import './CreateConsultation.css';
+import './CreateAppointment.css';
 
-const CreateConsultation: React.FC = () => {
+const CreateAppointment: React.FC = () => {
   const router = useIonRouter();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -121,4 +121,4 @@ const CreateConsultation: React.FC = () => {
   );
 };
 
-export default CreateConsultation; 
+export default CreateAppointment; 

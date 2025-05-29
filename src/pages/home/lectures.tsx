@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
   IonCardHeader,
@@ -15,9 +12,16 @@ import {
   IonLabel,
   IonInput,
   IonCheckbox,
-  IonList
+  IonList,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonIcon
 } from '@ionic/react';
+import { chevronBackOutline } from 'ionicons/icons';
+import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
+import './shared-styles.css'
 
 const lectures = [
   {
@@ -65,24 +69,29 @@ const Lectures: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="app-title">Palestras</IonTitle>
+          <IonTitle>Palestras</IonTitle>
         </IonToolbar>
       </IonHeader>
-
-      <IonContent className="ion-padding">
-        {lectures.map((lecture, index) => (
-          <IonCard key={index}>
-            <IonCardHeader>
-              <IonCardTitle>{lecture.title}</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <p>{lecture.description}</p>
-              <IonButton expand="block" onClick={() => handleSubscribe(lecture.title)}>
-                Inscrever-se
-              </IonButton>
-            </IonCardContent>
-          </IonCard>
-        ))}
+      <IonContent>
+        <Link to="/home" className="back-button">
+          <IonIcon icon={chevronBackOutline} />
+          Voltar
+        </Link>
+        <div className="ion-content-inner">
+          {lectures.map((lecture, index) => (
+            <IonCard key={index}>
+              <IonCardHeader>
+                <IonCardTitle>{lecture.title}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>{lecture.description}</p>
+                <IonButton expand="block" onClick={() => handleSubscribe(lecture.title)}>
+                  Inscrever-se
+                </IonButton>
+              </IonCardContent>
+            </IonCard>
+          ))}
+        </div>
 
         <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
           <IonHeader>
@@ -130,7 +139,6 @@ const Lectures: React.FC = () => {
           </IonContent>
         </IonModal>
       </IonContent>
-
       <Footer />
     </IonPage>
   );
