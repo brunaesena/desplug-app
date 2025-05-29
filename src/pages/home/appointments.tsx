@@ -10,9 +10,13 @@ import {
   IonCardTitle,
   IonCardContent,
   IonButton,
-  IonAlert
+  IonAlert,
+  IonIcon
 } from '@ionic/react';
+import { chevronBackOutline } from 'ionicons/icons';
+import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
+import './shared-styles.css'
 
 const appointments = [
   {
@@ -52,24 +56,29 @@ const Appointments: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="app-title">Consultorias</IonTitle>
+          <IonTitle>Consultorias</IonTitle>
         </IonToolbar>
       </IonHeader>
-
-      <IonContent className="ion-padding">
-        {appointments.map((item, index) => (
-          <IonCard key={index} className="appointment-card">
-            <IonCardHeader>
-              <IonCardTitle>{item.title}</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <p>{item.description}</p>
-              <IonButton expand="block" onClick={() => handleParticipar(item.title)}>
-                Participar
-              </IonButton>
-            </IonCardContent>
-          </IonCard>
-        ))}
+      <IonContent>
+        <Link to="/home" className="back-button">
+          <IonIcon icon={chevronBackOutline} />
+          Voltar
+        </Link>
+        <div className="ion-content-inner">
+          {appointments.map((item, index) => (
+            <IonCard key={index} className="appointment-card">
+              <IonCardHeader>
+                <IonCardTitle>{item.title}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>{item.description}</p>
+                <IonButton expand="block" onClick={() => handleParticipar(item.title)}>
+                  Participar
+                </IonButton>
+              </IonCardContent>
+            </IonCard>
+          ))}
+        </div>
 
         <IonAlert
           isOpen={showAlert}

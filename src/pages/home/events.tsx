@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader,
+  IonPage, IonContent, IonCard, IonCardHeader,
   IonCardTitle, IonCardContent, IonButton, IonInput, IonLabel, IonItem, IonModal,
-  IonCheckbox, IonList
+  IonCheckbox, IonList, IonHeader, IonToolbar, IonTitle, IonIcon
 } from '@ionic/react';
+import { chevronBackOutline } from 'ionicons/icons';
+import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
+import './shared-styles.css'
 
 const events = [
   {
@@ -50,26 +53,32 @@ const Events: React.FC = () => {
 
   return (
     <IonPage>
+
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="app-title">Eventos</IonTitle>
+          <IonTitle>Eventos</IonTitle>
         </IonToolbar>
       </IonHeader>
-
-      <IonContent className="ion-padding">
-        {events.map((event, index) => (
-          <IonCard key={index}>
-            <IonCardHeader>
-              <IonCardTitle>{event.title}</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <p>{event.description}</p>
-              <IonButton expand="block" onClick={() => handleSubscribe(event.title)}>
-                Inscrever-se
-              </IonButton>
-            </IonCardContent>
-          </IonCard>
-        ))}
+      <IonContent>
+        <Link to="/home" className="back-button">
+          <IonIcon icon={chevronBackOutline} />
+          Voltar
+        </Link>
+        <div className="ion-content-inner">
+          {events.map((event, index) => (
+            <IonCard key={index}>
+              <IonCardHeader>
+                <IonCardTitle>{event.title}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>{event.description}</p>
+                <IonButton expand="block" onClick={() => handleSubscribe(event.title)}>
+                  Inscrever-se
+                </IonButton>
+              </IonCardContent>
+            </IonCard>
+          ))}
+        </div>
 
         <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
           <IonHeader>
@@ -117,7 +126,6 @@ const Events: React.FC = () => {
           </IonContent>
         </IonModal>
       </IonContent>
-
       <Footer />
     </IonPage>
   );

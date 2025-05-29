@@ -88,7 +88,7 @@ const Register = () => {
         name,
         email,
         phone,
-        type: 'user',
+        type: isProvider ? 'admin' : 'user',
         isProvider,
         // Incluir campos de prestador apenas se isProvider for true
         profession: isProvider ? profession : null,

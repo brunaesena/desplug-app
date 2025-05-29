@@ -51,15 +51,33 @@ ion-content {
   --padding-start: 16px;
   --padding-end: 16px;
   font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Container principal para limitar largura */
+.ion-content-inner {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 /* ============= HEADER ============= */
+ion-header {
+  width: 100%;
+}
+
 ion-toolbar {
   --background: var(--color-card);
   --color: var(--color-text);
   --border-color: var(--color-border);
   --border-width: 0 0 1px 0;
   --min-height: 70px;
+  max-width: 320px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .app-title {
@@ -91,6 +109,8 @@ ion-searchbar {
   --placeholder-opacity: 0.8;
   padding: 0 0 20px 0;
   margin-bottom: 8px;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 /* ============= TÍTULOS ============= */
@@ -128,7 +148,7 @@ ion-searchbar {
 /* ============= CARDS ============= */
 ion-card {
   --background: var(--color-card);
-  margin: 0 0 24px 0;
+  margin: 16px 0;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
@@ -136,6 +156,8 @@ ion-card {
   overflow: hidden;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 320px;
 }
 
 ion-card:hover {
@@ -299,49 +321,16 @@ ion-card-content {
 @media (max-width: 576px) {
   .activities-title {
     font-size: 1.6rem;
-    margin: 24px 16px 16px;
+    margin: 24px 0 16px;
+    text-align: center;
   }
 
   ion-card {
-    margin-bottom: 16px;
+    margin: 12px 0;
     border-radius: var(--radius-sm);
   }
 
   ion-card-content {
     padding: 16px;
   }
-}
-/* 1. Container principal do header */
-ion-header {
-  display: flex;
-  justify-content: center;
-}
-
-/* 2. Toolbar com largura máxima */
-ion-toolbar {
-  --min-height: 70px;
-  max-width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-}
-
-/* 3. Título centralizado */
-.app-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-/* 4. Estilo da logo */
-.app-logo {
-  height: 40px; 
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
 }

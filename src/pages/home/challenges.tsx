@@ -12,11 +12,13 @@ import {
   IonButton,
   IonAlert,
   IonIcon,
-  useIonRouter
+  IonButtons,
+  IonBackButton
 } from '@ionic/react';
-import { shareSocialOutline } from 'ionicons/icons';
+import { shareSocialOutline, chevronBackOutline } from 'ionicons/icons';
+import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
-import './challenges.css'
+import './shared-styles.css'
 
 const challenges = [
   {
@@ -33,14 +35,13 @@ const challenges = [
   },
   {
     title: 'Silêncio Digital',
-    description: 'Ative o modo “não perturbe” por 2 horas seguidas e aproveite o momento presente.'
+    description: 'Ative o modo "não perturbe" por 2 horas seguidas e aproveite o momento presente.'
   }
 ];
 
 const Challenges: React.FC = () => {
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
-  const router = useIonRouter();
 
   useEffect(() => {
     if (selectedChallenge) {
@@ -50,13 +51,6 @@ const Challenges: React.FC = () => {
 
   const handleParticipar = (title: string) => {
     setSelectedChallenge(title);
-  };
-
-  const handleAlertDismiss = () => {
-    setShowAlert(false);
-    setTimeout(() => {
-      router.push('/home', 'root');
-    }, 300);
   };
 
   const handleCompartilhar = (challengeTitle: string) => {
@@ -75,37 +69,42 @@ const Challenges: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="app-title">Desafios</IonTitle>
+          <IonTitle>Desafios</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
-        {challenges.map((challenge, index) => (
-          <IonCard key={index} className="challenge-card">
-            <IonCardHeader>
-              <IonCardTitle>{challenge.title}</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <p>{challenge.description}</p>
-              <div className="card-buttons">
-                <IonButton expand="block" onClick={() => handleParticipar(challenge.title)}>
-                  Participar
-                </IonButton>
-                <IonButton
-                  fill="clear"
-                  color="medium"
-                  onClick={() => handleCompartilhar(challenge.title)}
-                >
-                  <IonIcon icon={shareSocialOutline} slot="icon-only" />
-                </IonButton>
-              </div>
-            </IonCardContent>
-          </IonCard>
-        ))}
+      <IonContent>
+        <Link to="/home" className="back-button">
+          <IonIcon icon={chevronBackOutline} />
+          Voltar
+        </Link>
+        <div className="ion-content-inner">
+          {challenges.map((challenge, index) => (
+            <IonCard key={index} className="challenge-card">
+              <IonCardHeader>
+                <IonCardTitle>{challenge.title}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>{challenge.description}</p>
+                <div className="challenge-buttons">
+                  <IonButton expand="block" onClick={() => handleParticipar(challenge.title)}>
+                    Participar
+                  </IonButton>
+                  <IonButton
+                    fill="clear"
+                    onClick={() => handleCompartilhar(challenge.title)}
+                  >
+                    <IonIcon icon={shareSocialOutline} slot="icon-only" />
+                  </IonButton>
+                </div>
+              </IonCardContent>
+            </IonCard>
+          ))}
+        </div>
 
         <IonAlert
           isOpen={showAlert}
-          onDidDismiss={handleAlertDismiss}
+          onDidDismiss={() => setShowAlert(false)}
           header="Inscrição realizada!"
           message={`Você se inscreveu no desafio: "${selectedChallenge || ''}"`}
           buttons={['OK']}

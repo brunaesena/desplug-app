@@ -1,0 +1,224 @@
+.ion-content-inner {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ion-card {
+    width: 100%;
+    margin: 12px 0;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #4fcdfc;
+}
+
+ion-card-header {
+    padding: 16px 16px 8px 16px;
+}
+
+ion-card-title {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+ion-card-content {
+    padding: 8px 16px 16px 16px;
+}
+
+ion-card-content p {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.card-buttons ion-button[expand="block"] {
+    --background: #4fcdfc;
+    --color: white;
+    flex: 1;
+    max-width: calc(100% - 48px);
+    margin: 0;
+    height: 40px;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.card-buttons ion-button[fill="clear"] {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    --color: #4fcdfc;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.card-buttons ion-button[fill="clear"] ion-icon {
+    font-size: 18px;
+}
+
+/* Estilos específicos dos botões da tela de desafios */
+.challenge-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.challenge-buttons ion-button[expand="block"] {
+    --background: #4fcdfc;
+    --color: white;
+    flex: 1;
+    max-width: calc(100% - 48px);
+    margin: 0;
+    height: 40px;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.challenge-buttons ion-button[fill="clear"] {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    --color: #4fcdfc;
+    --background: transparent;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.challenge-buttons ion-button[fill="clear"] ion-icon {
+    font-size: 20px;
+    color: #4fcdfc;
+}
+
+/* Modal styles */
+ion-modal {
+    --height: auto;
+    --width: 320px;
+    --border-radius: 15px;
+}
+
+ion-modal ion-content {
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+ion-modal .ion-padding-top {
+    padding-top: 16px;
+}
+
+ion-modal ion-button {
+    margin: 8px 0;
+}
+
+/* Header styles */
+ion-header ion-toolbar {
+    --background: white;
+    --border-width: 0;
+    --min-height: 60px;
+    padding: 8px 0;
+}
+
+ion-header ion-title {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #2c3e50;
+}
+
+.back-button {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #4fcdfc;
+    background: transparent;
+    border: none;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-button ion-icon {
+    font-size: 24px;
+    margin-right: -4px;
+}
+
+.back-button:hover {
+    opacity: 0.9;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    ion-card {
+        --background: rgba(26, 31, 37, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    ion-card-title {
+        color: #fcfcfc;
+    }
+
+    ion-card-content p {
+        color: #a1adb0;
+    }
+
+    ion-header ion-toolbar {
+        --background: rgba(26, 31, 37, 0.95);
+    }
+
+    ion-header ion-title {
+        color: #f5f7f9;
+    }
+
+    .back-button {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #4fcdfc;
+        background: transparent;
+        border: none;
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 8px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .back-button:hover {
+        opacity: 0.9;
+    }
+}
