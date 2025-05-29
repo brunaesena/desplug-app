@@ -1,0 +1,179 @@
+.ion-content-inner {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #fcfcfc;
+}
+
+/* Segmento de navegação */
+ion-segment {
+  margin: 0 0 15px 0;
+  --background: white;
+  border-radius: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+ion-segment-button {
+  --color: #444;
+  --color-checked: #4fcdfc;
+  --indicator-color: #4fcdfc;
+  min-width: auto;
+  font-size: 14px;
+  text-transform: none;
+}
+
+/* Cards */
+ion-card {
+  margin: 0 0 15px 0;
+  border-radius: 10px;
+  background: white;
+  box-shadow: none;
+  border: 1px solid #eee;
+}
+
+ion-card-header {
+  padding: 15px 15px 10px;
+}
+
+ion-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+ion-card-content {
+  padding: 0 15px 15px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* Detalhes do evento */
+.event-details {
+  margin: 8px 0;
+  color: #666;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Slots de tempo */
+.time-slots {
+  margin-top: 10px;
+}
+
+.time-slots h4 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #444;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.time-slot-info {
+  margin: 5px 0;
+}
+
+.time-slot-info ion-badge {
+  --background: #4fcdfc;
+  --color: white;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 4px 8px;
+}
+
+/* Informação de dificuldade */
+.difficulty-info {
+  margin-top: 10px;
+}
+
+.difficulty-info ion-badge {
+  font-size: 12px;
+  font-weight: normal;
+  padding: 4px 8px;
+}
+
+/* Seção de atividades criadas */
+.created-activities-section {
+  margin-top: 20px;
+}
+
+.created-activities-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 15px;
+  padding: 0 0 8px;
+  border-bottom: 2px solid #4fcdfc;
+}
+
+.created-activities-section h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+  margin: 15px 0 10px;
+}
+
+.created-activities-section ion-button.edit-button {
+  --color: white;
+  --background: #4fcdfc;
+  --border-radius: 8px;
+  margin-top: 8px;
+  height: 36px;
+  font-size: 14px;
+}
+
+.created-activities-section ion-button.edit-button ion-icon {
+  margin-right: 5px;
+  font-size: 18px;
+}
+
+/* Estado vazio */
+.empty-state {
+  text-align: center;
+  padding: 30px 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Estado de carregamento */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+}
+
+.loading-state ion-spinner {
+  color: #4fcdfc;
+  margin-bottom: 10px;
+}
+
+.loading-state p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsividade para tablets */
+@media (min-width: 768px) {
+  .ion-content-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  ion-card-title {
+    font-size: 18px;
+  }
+
+  ion-card-content {
+    font-size: 15px;
+  }
+
+  .created-activities-section h2 {
+    font-size: 20px;
+  }
+}

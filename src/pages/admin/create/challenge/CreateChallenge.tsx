@@ -20,10 +20,12 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import { checkmarkDoneOutline, createOutline } from 'ionicons/icons';
-import Footer from '../../components/Footer';
+import { auth } from '../../../../firebase';
+import { createChallenge } from '../../../../utils/firestore';
+import Footer from '../../../../components/Footer';
 import './CreateChallenge.css';
 
-type Difficulty = 'facil' | 'medio' | 'dificil' | '';
+type Difficulty = 'easy' | 'medium' | 'hard' | '';
 
 interface FormErrors {
   title?: string;
@@ -37,6 +39,8 @@ const CreateChallenge: React.FC = () => {
   const [description, setDescription] = useState('');
   const [difficulty, setDifficulty] = useState<Difficulty>('');
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastColor, setToastColor] = useState<'success' | 'danger'>('success');
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isTouched, setIsTouched] = useState({
     title: false,
@@ -92,23 +96,23 @@ const CreateChallenge: React.FC = () => {
 
   const getDifficultyColor = (): string => {
     switch (difficulty) {
-      case 'facil': return 'success';
-      case 'medio': return 'warning';
-      case 'dificil': return 'danger';
+      case 'easy': return 'success';
+      case 'medium': return 'warning';
+      case 'hard': return 'danger';
       default: return 'medium';
     }
   };
 
   const getDifficultyLabel = (): string => {
     switch (difficulty) {
-      case 'facil': return 'Fácil';
-      case 'medio': return 'Médio';
-      case 'dificil': return 'Difícil';
+      case 'easy': return 'Fácil';
+      case 'medium': return 'Médio';
+      case 'hard': return 'Difícil';
       default: return '';
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Marca todos os campos como tocados para mostrar erros
@@ -127,19 +131,47 @@ const CreateChallenge: React.FC = () => {
       console.log('Formulário inválido', formErrors);
       return;
     }
-    
-    console.log('Desafio criado:', { title, description, difficulty });
-    setShowToast(true);
-    
-    setTimeout(() => {
-      router.push('/home', 'root');
-    }, 1500);
+
+    try {
+      if (!auth.currentUser) {
+        throw new Error('Usuário não autenticado');
+      }
+
+      const challengeData = {
+        creatorId: auth.currentUser.uid,
+        title: title.trim(),
+        description: description.trim(),
+        difficulty: difficulty as 'easy' | 'medium' | 'hard'
+      };
+
+      await createChallenge(challengeData);
+      setToastMessage('Desafio criado com sucesso!');
+      setToastColor('success');
+      setShowToast(true);
+      
+      // Reset form
+      setTitle('');
+      setDescription('');
+      setDifficulty('');
+      setIsTouched({
+        title: false,
+        description: false,
+        difficulty: false,
+      });
+      setFormErrors({});
+
+    } catch (error) {
+      console.error('Erro ao criar desafio:', error);
+      setToastMessage(error instanceof Error ? error.message : 'Erro ao criar desafio');
+      setToastColor('danger');
+      setShowToast(true);
+    }
   };
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar className="header-toolbar">
+        <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton defaultHref="/home" />
           </IonButtons>
@@ -149,12 +181,6 @@ const CreateChallenge: React.FC = () => {
 
       <IonContent className="ion-padding">
         <form onSubmit={handleSubmit} className="create-form">
-          <div className="form-intro">
-            <IonIcon icon={createOutline} className="form-icon" />
-            <h2>Novo Desafio</h2>
-            <p>Compartilhe um desafio interessante com a comunidade</p>
-          </div>
-          
           <IonItem 
             className={`custom-item ${isTouched.title && formErrors.title ? 'ion-invalid' : ''}`}
           >
@@ -204,9 +230,9 @@ const CreateChallenge: React.FC = () => {
               className="custom-select"
               interface="popover"
             >
-              <IonSelectOption value="facil">Fácil</IonSelectOption>
-              <IonSelectOption value="medio">Médio</IonSelectOption>
-              <IonSelectOption value="dificil">Difícil</IonSelectOption>
+              <IonSelectOption value="easy">Fácil</IonSelectOption>
+              <IonSelectOption value="medium">Médio</IonSelectOption>
+              <IonSelectOption value="hard">Difícil</IonSelectOption>
             </IonSelect>
             {isTouched.difficulty && formErrors.difficulty && (
               <div className="error-message" aria-live="polite">
@@ -238,12 +264,12 @@ const CreateChallenge: React.FC = () => {
         <IonToast
           isOpen={showToast}
           onDidDismiss={() => setShowToast(false)}
-          message="Desafio criado com sucesso!"
+          message={toastMessage}
           duration={1500}
           position="bottom"
-          color="success"
-          cssClass="success-toast"
-          icon={checkmarkDoneOutline}
+          color={toastColor}
+          cssClass="custom-toast"
+          icon={toastColor === 'success' ? checkmarkDoneOutline : undefined}
         />
       </IonContent>
       <Footer />

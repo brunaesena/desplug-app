@@ -13,35 +13,54 @@ import {
   IonAlert,
   IonIcon,
   IonButtons,
-  IonBackButton
+  IonBackButton,
+  IonBadge,
+  IonSpinner
 } from '@ionic/react';
 import { shareSocialOutline, chevronBackOutline } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
+import { getAllChallenges, subscribeToActivity, isUserSubscribed } from '../../utils/firestore';
+import { auth } from '../../firebase';
+import type { Challenge } from '../../types/firestore';
 import Footer from '../../components/Footer';
 import './shared-styles.css'
 
-const challenges = [
-  {
-    title: '24h Offline',
-    description: 'Passe um dia inteiro sem acessar redes sociais, apenas para atividades essenciais.'
-  },
-  {
-    title: 'Não é permitido telefone nas refeições',
-    description: 'Evite qualquer uso de dispositivos conectados durante as refeições.'
-  },
-  {
-    title: 'Caminhada Sem Celular',
-    description: 'Faça uma caminhada de pelo menos 30 minutos deixando o celular em casa.'
-  },
-  {
-    title: 'Silêncio Digital',
-    description: 'Ative o modo "não perturbe" por 2 horas seguidas e aproveite o momento presente.'
-  }
-];
-
 const Challenges: React.FC = () => {
-  const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [subscribedChallenges, setSubscribedChallenges] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const challengesData = await getAllChallenges();
+        setChallenges(challengesData);
+
+        // Check subscription status for each challenge
+        const userId = auth.currentUser?.uid;
+        if (userId) {
+          const subscriptionPromises = challengesData.map(challenge => 
+            isUserSubscribed(userId, challenge.id)
+          );
+          const subscriptionResults = await Promise.all(subscriptionPromises);
+          const subscribedIds = new Set(
+            challengesData
+              .filter((_, index) => subscriptionResults[index])
+              .map(challenge => challenge.id)
+          );
+          setSubscribedChallenges(subscribedIds);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar desafios:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChallenges();
+  }, []);
 
   useEffect(() => {
     if (selectedChallenge) {
@@ -49,8 +68,20 @@ const Challenges: React.FC = () => {
     }
   }, [selectedChallenge]);
 
-  const handleParticipar = (title: string) => {
-    setSelectedChallenge(title);
+  const handleParticipar = async (challenge: Challenge) => {
+    if (!auth.currentUser?.uid) {
+      alert('Você precisa estar logado para participar de desafios.');
+      return;
+    }
+
+    try {
+      await subscribeToActivity(auth.currentUser.uid, challenge.id, 'challenge');
+      setSubscribedChallenges(prev => new Set([...prev, challenge.id]));
+      setSelectedChallenge(challenge);
+    } catch (error) {
+      console.error('Erro ao se inscrever no desafio:', error);
+      alert('Erro ao confirmar inscrição. Tente novamente.');
+    }
   };
 
   const handleCompartilhar = (challengeTitle: string) => {
@@ -62,6 +93,24 @@ const Challenges: React.FC = () => {
       }).catch(err => console.log('Erro ao compartilhar:', err));
     } else {
       alert(`Compartilhe este desafio: "${challengeTitle}"`);
+    }
+  };
+
+  const getDifficultyColor = (difficulty: Challenge['difficulty']): string => {
+    switch (difficulty) {
+      case 'easy': return 'success';
+      case 'medium': return 'warning';
+      case 'hard': return 'danger';
+      default: return 'medium';
+    }
+  };
+
+  const getDifficultyLabel = (difficulty: Challenge['difficulty']): string => {
+    switch (difficulty) {
+      case 'easy': return 'Fácil';
+      case 'medium': return 'Médio';
+      case 'hard': return 'Difícil';
+      default: return '';
     }
   };
 
@@ -79,34 +128,56 @@ const Challenges: React.FC = () => {
           Voltar
         </Link>
         <div className="ion-content-inner">
-          {challenges.map((challenge, index) => (
-            <IonCard key={index} className="challenge-card">
-              <IonCardHeader>
-                <IonCardTitle>{challenge.title}</IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <p>{challenge.description}</p>
-                <div className="challenge-buttons">
-                  <IonButton expand="block" onClick={() => handleParticipar(challenge.title)}>
-                    Participar
-                  </IonButton>
-                  <IonButton
-                    fill="clear"
-                    onClick={() => handleCompartilhar(challenge.title)}
-                  >
-                    <IonIcon icon={shareSocialOutline} slot="icon-only" />
-                  </IonButton>
-                </div>
-              </IonCardContent>
-            </IonCard>
-          ))}
+          {loading ? (
+            <div className="ion-text-center ion-padding">
+              <IonSpinner />
+              <p>Carregando desafios...</p>
+            </div>
+          ) : challenges.length === 0 ? (
+            <div className="ion-text-center ion-padding">
+              <p>Nenhum desafio disponível no momento.</p>
+            </div>
+          ) : (
+            challenges.map((challenge) => (
+              <IonCard key={challenge.id} className="challenge-card">
+                <IonCardHeader>
+                  <IonCardTitle>{challenge.title}</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <p>{challenge.description}</p>
+                  <div className="difficulty-info">
+                    <IonBadge color={getDifficultyColor(challenge.difficulty)}>
+                      {getDifficultyLabel(challenge.difficulty)}
+                    </IonBadge>
+                  </div>
+                  <div className="challenge-buttons">
+                    {subscribedChallenges.has(challenge.id) ? (
+                      <IonButton expand="block" color="success" disabled>
+                        Inscrito
+                      </IonButton>
+                    ) : (
+                      <IonButton expand="block" onClick={() => handleParticipar(challenge)}>
+                        Inscrever-se
+                      </IonButton>
+                    )}
+                    <IonButton
+                      fill="clear"
+                      onClick={() => handleCompartilhar(challenge.title)}
+                    >
+                      <IonIcon icon={shareSocialOutline} slot="icon-only" />
+                    </IonButton>
+                  </div>
+                </IonCardContent>
+              </IonCard>
+            ))
+          )}
         </div>
 
         <IonAlert
           isOpen={showAlert}
           onDidDismiss={() => setShowAlert(false)}
           header="Inscrição realizada!"
-          message={`Você se inscreveu no desafio: "${selectedChallenge || ''}"`}
+          message={selectedChallenge ? `Você se inscreveu no desafio: "${selectedChallenge.title}"` : ''}
           buttons={['OK']}
         />
       </IonContent>

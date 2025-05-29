@@ -1,0 +1,35 @@
+.create-options {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create-button {
+  --background: #ffffff;
+  --color: #2c3e50;
+  --border-radius: 12px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 50px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: none;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.create-button:hover {
+  --background: #4fcdfc;
+  --color: #ffffff;
+  border-color: #4fcdfc;
+  transform: translateY(-2px);
+  --box-shadow: 0 4px 12px rgba(79, 205, 252, 0.2);
+}
+
+.create-button ion-icon {
+  font-size: 24px;
+  margin-right: 12px;
+} 

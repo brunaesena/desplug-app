@@ -15,14 +15,14 @@ import {
   IonSelect,
   IonSelectOption
 } from '@ionic/react'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db } from '../../firebase'
 import './register.css'
 
 const Register = () => {
-  const navigate = useNavigate()
+  const history = useHistory()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -30,7 +30,7 @@ const Register = () => {
   const [phone, setPhone] = useState('')
   const [isProvider, setIsProvider] = useState(false)
   const [error, setError] = useState('')
-  
+
   // Novos estados para campos de prestador de serviço
   const [profession, setProfession] = useState('')
   const [degree, setDegree] = useState('')
@@ -98,7 +98,7 @@ const Register = () => {
       }
 
       await setDoc(doc(db, 'users', uid), userData)
-      navigate('/login')
+      history.push('/login')
     } catch (err: any) {
       setError(err.message)
     }
@@ -181,10 +181,11 @@ const Register = () => {
             />
           </IonItem>
 
-          <IonItem className="checkbox-item">
+          <IonItem lines="none" button onClick={() => setIsProvider(!isProvider)} className="checkbox-item">
             <IonCheckbox
               checked={isProvider}
               onIonChange={e => setIsProvider(e.detail.checked)}
+              slot="start"
             />
             <IonLabel>Sou prestador de serviço</IonLabel>
           </IonItem>
@@ -239,7 +240,7 @@ const Register = () => {
           <div className="text-footer">
             <p>
               Já tem uma conta?{' '}
-              <span onClick={() => navigate('/login')}>
+              <span onClick={() => history.push('/login')}>
                 Faça login aqui
               </span>
             </p>

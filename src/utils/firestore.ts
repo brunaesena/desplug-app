@@ -11,7 +11,9 @@ import {
   orderBy,
   serverTimestamp,
   Timestamp,
-  setDoc
+  setDoc,
+  arrayUnion,
+  arrayRemove
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { User, Event, Lecture, Challenge, Appointment, Attendance } from '../types/firestore'
@@ -47,12 +49,9 @@ export const getEvent = async (eventId: string) => {
 }
 
 export const getAllEvents = async () => {
-  const q = query(
-    collection(db, 'events'),
-    orderBy('date', 'asc')
-  )
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }) as Event)
+  const eventsRef = collection(db, 'events')
+  const snapshot = await getDocs(eventsRef)
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event))
 }
 
 // Lecture Functions
@@ -71,12 +70,9 @@ export const getLecture = async (lectureId: string) => {
 }
 
 export const getAllLectures = async () => {
-  const q = query(
-    collection(db, 'lectures'),
-    orderBy('date', 'asc')
-  )
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }) as Lecture)
+  const lecturesRef = collection(db, 'lectures')
+  const snapshot = await getDocs(lecturesRef)
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Lecture))
 }
 
 // Challenge Functions
@@ -95,12 +91,9 @@ export const getChallenge = async (challengeId: string) => {
 }
 
 export const getAllChallenges = async () => {
-  const q = query(
-    collection(db, 'challenges'),
-    orderBy('createdAt', 'desc')
-  )
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }) as Challenge)
+  const challengesRef = collection(db, 'challenges')
+  const snapshot = await getDocs(challengesRef)
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Challenge))
 }
 
 // Appointment Functions
@@ -119,12 +112,9 @@ export const getAppointment = async (appointmentId: string) => {
 }
 
 export const getAllAppointments = async () => {
-  const q = query(
-    collection(db, 'appointments'),
-    orderBy('createdAt', 'desc')
-  )
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }) as Appointment)
+  const appointmentsRef = collection(db, 'appointments')
+  const snapshot = await getDocs(appointmentsRef)
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Appointment))
 }
 
 // Attendance Functions
@@ -167,4 +157,182 @@ export const getItemAttendances = async (itemType: Attendance['itemType'], itemI
 export const updateAttendanceStatus = async (attendanceId: string, status: Attendance['status']) => {
   const docRef = doc(db, 'attendance', attendanceId)
   await updateDoc(docRef, { status })
-} 
+}
+
+// New functions for user subscriptions
+export const subscribeToActivity = async (
+  userId: string,
+  activityId: string,
+  activityType: 'event' | 'lecture' | 'challenge' | 'appointment',
+  additionalData?: any
+) => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const subscriptionData = {
+    userId,
+    activityId,
+    activityType,
+    subscribedAt: new Date(),
+    ...additionalData
+  }
+
+  await addDoc(userActivitiesRef, subscriptionData)
+
+  // Update the activity document to include the user
+  const activityRef = doc(db, `${activityType}s`, activityId)
+  await updateDoc(activityRef, {
+    subscribers: arrayUnion(userId)
+  })
+}
+
+export const unsubscribeFromActivity = async (
+  userId: string,
+  activityId: string,
+  activityType: 'event' | 'lecture' | 'challenge' | 'appointment'
+) => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const q = query(
+    userActivitiesRef,
+    where('userId', '==', userId),
+    where('activityId', '==', activityId)
+  )
+  
+  const snapshot = await getDocs(q)
+  snapshot.docs.forEach(async (doc) => {
+    await deleteDoc(doc.ref)
+  })
+
+  // Remove user from activity's subscribers
+  const activityRef = doc(db, `${activityType}s`, activityId)
+  await updateDoc(activityRef, {
+    subscribers: arrayRemove(userId)
+  })
+}
+
+export const isUserSubscribed = async (
+  userId: string,
+  activityId: string
+): Promise<boolean> => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const q = query(
+    userActivitiesRef,
+    where('userId', '==', userId),
+    where('activityId', '==', activityId)
+  )
+  
+  const snapshot = await getDocs(q)
+  return !snapshot.empty
+}
+
+export const getUserSubscribedEvents = async (userId: string): Promise<Event[]> => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const q = query(
+    userActivitiesRef,
+    where('userId', '==', userId),
+    where('activityType', '==', 'event')
+  )
+  
+  const snapshot = await getDocs(q)
+  const eventIds = snapshot.docs.map(doc => doc.data().activityId)
+  
+  const events: Event[] = []
+  for (const eventId of eventIds) {
+    const eventDoc = await getDoc(doc(db, 'events', eventId))
+    if (eventDoc.exists()) {
+      events.push({ id: eventDoc.id, ...eventDoc.data() } as Event)
+    }
+  }
+  
+  return events
+}
+
+export const getUserSubscribedLectures = async (userId: string): Promise<Lecture[]> => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const q = query(
+    userActivitiesRef,
+    where('userId', '==', userId),
+    where('activityType', '==', 'lecture')
+  )
+  
+  const snapshot = await getDocs(q)
+  const lectureIds = snapshot.docs.map(doc => doc.data().activityId)
+  
+  const lectures: Lecture[] = []
+  for (const lectureId of lectureIds) {
+    const lectureDoc = await getDoc(doc(db, 'lectures', lectureId))
+    if (lectureDoc.exists()) {
+      lectures.push({ id: lectureDoc.id, ...lectureDoc.data() } as Lecture)
+    }
+  }
+  
+  return lectures
+}
+
+export const getUserSubscribedChallenges = async (userId: string): Promise<Challenge[]> => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const q = query(
+    userActivitiesRef,
+    where('userId', '==', userId),
+    where('activityType', '==', 'challenge')
+  )
+  
+  const snapshot = await getDocs(q)
+  const challengeIds = snapshot.docs.map(doc => doc.data().activityId)
+  
+  const challenges: Challenge[] = []
+  for (const challengeId of challengeIds) {
+    const challengeDoc = await getDoc(doc(db, 'challenges', challengeId))
+    if (challengeDoc.exists()) {
+      challenges.push({ id: challengeDoc.id, ...challengeDoc.data() } as Challenge)
+    }
+  }
+  
+  return challenges
+}
+
+export const getUserSubscribedAppointments = async (userId: string): Promise<Appointment[]> => {
+  const userActivitiesRef = collection(db, 'userActivities')
+  const q = query(
+    userActivitiesRef,
+    where('userId', '==', userId),
+    where('activityType', '==', 'appointment')
+  )
+  
+  const snapshot = await getDocs(q)
+  const appointmentIds = snapshot.docs.map(doc => doc.data().activityId)
+  
+  const appointments: Appointment[] = []
+  for (const appointmentId of appointmentIds) {
+    const appointmentDoc = await getDoc(doc(db, 'appointments', appointmentId))
+    if (appointmentDoc.exists()) {
+      appointments.push({ id: appointmentDoc.id, ...appointmentDoc.data() } as Appointment)
+    }
+  }
+  
+  return appointments
+}
+
+export const getCreatedActivities = async (userId: string) => {
+  try {
+    const [events, lectures, challenges, appointments] = await Promise.all([
+      getDocs(query(collection(db, 'events'), where('creatorId', '==', userId))),
+      getDocs(query(collection(db, 'lectures'), where('creatorId', '==', userId))),
+      getDocs(query(collection(db, 'challenges'), where('creatorId', '==', userId))),
+      getDocs(query(collection(db, 'appointments'), where('creatorId', '==', userId)))
+    ]);
+
+    return {
+      events: events.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event)),
+      lectures: lectures.docs.map(doc => ({ id: doc.id, ...doc.data() } as Lecture)),
+      challenges: challenges.docs.map(doc => ({ id: doc.id, ...doc.data() } as Challenge)),
+      appointments: appointments.docs.map(doc => ({ id: doc.id, ...doc.data() } as Appointment))
+    };
+  } catch (error) {
+    console.error('Erro ao buscar atividades criadas:', error);
+    return {
+      events: [],
+      lectures: [],
+      challenges: [],
+      appointments: []
+    };
+  }
+}; 

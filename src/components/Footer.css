@@ -35,17 +35,4 @@ ion-tab-bar {
   
   ion-tab-button:hover ion-icon {
     transform: translateY(-2px);
-  }
-  
-  /* Dark mode support */
-  @media (prefers-color-scheme: dark) {
-    ion-tab-bar {
-      --background: rgba(26, 31, 37, 0.95);
-      --border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-    }
-  
-    ion-tab-button {
-      --color: #6c7c8c;
-    }
   } 
