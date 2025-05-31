@@ -1,12 +1,32 @@
 /* ============= VARIÁVEIS GLOBAIS ============= */
 :root {
-  /* Cores Primárias - Nova Paleta */
-  --color-white: #fcfcfc;
+  /* Cores principais */
   --color-primary: #4fcdfc;
   --color-secondary: #6ac2e2;
   --color-tertiary: #85b7c9;
   --color-neutral: #a1adb0;
   
+  /* Cores dos cards - usando as cores padrões do app */
+  --color-desafios: linear-gradient(135deg, var(--color-primary) 0%, #3bb8e7 100%);
+  --color-eventos: linear-gradient(135deg, var(--color-secondary) 0%, #5badd0 100%);
+  --color-consultoria: linear-gradient(135deg, var(--color-tertiary) 0%, #6a9aac 100%);
+  --color-palestras: linear-gradient(135deg, var(--color-neutral) 0%, #8a9599 100%);
+  
+  /* Tons de texto */
+  --color-text: #2c3e50;
+  --color-text-light: #718096;
+  --color-white: #ffffff;
+  
+  /* Efeitos */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  /* Bordas */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
   /* Variações das Cores Principais */
   --color-primary-light: rgba(79, 205, 252, 0.15);
   --color-primary-dark: #3bb8e7;
@@ -14,8 +34,6 @@
   --color-secondary-dark: #5badd0;
   
   /* Tons Neutros */
-  --color-text: #2c3e50;
-  --color-text-light: #546e7a;
   --color-text-lighter: var(--color-neutral);
   --color-bg: var(--color-white);
   --color-card: #ffffff;
@@ -31,11 +49,6 @@
   --shadow-sm: 0 2px 10px rgba(161, 173, 176, 0.08);
   --shadow-md: 0 4px 16px rgba(161, 173, 176, 0.12);
   --shadow-lg: 0 8px 28px rgba(161, 173, 176, 0.16);
-
-  /* Bordas Mais Suaves */
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
 
   /* Transições */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,9 +72,10 @@ ion-content {
 /* Container principal para limitar largura */
 .ion-content-inner {
   width: 100%;
-  max-width: 320px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 24px 16px;
+  background-color: #f8fafc;
 }
 
 /* ============= HEADER ============= */
@@ -99,50 +113,119 @@ ion-toolbar {
 }
 
 /* ============= BARRA DE BUSCA ============= */
-ion-searchbar {
-  --background: var(--color-card);
-  --border-radius: var(--radius-sm);
+.search-container {
+  margin-bottom: 32px;
+}
+
+.custom-searchbar {
+  --background: var(--color-white);
+  --border-radius: var(--radius-lg);
   --box-shadow: var(--shadow-sm);
   --color: var(--color-text);
-  --icon-color: var(--color-text-lighter);
-  --placeholder-color: #a8a8a8;
+  --icon-color: var(--color-primary);
+  --placeholder-color: var(--color-text-light);
   --placeholder-opacity: 0.8;
-  padding: 0 0 20px 0;
-  margin-bottom: 8px;
-  max-width: 320px;
-  margin: 0 auto;
+  --padding-start: 16px;
+  --padding-end: 16px;
 }
 
 /* ============= TÍTULOS ============= */
-.activities-title {
-  color: var(--color-text);
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 32px 16px 24px;
+.header-section {
+  margin-bottom: 32px;
   position: relative;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(79, 205, 252, 0.1) 0%, rgba(106, 194, 226, 0.05) 100%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
-.activities-title::after {
+.header-section::before {
   content: '';
   position: absolute;
-  bottom: -12px;
-  left: 16px;
-  width: 80px;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 4px;
-  background: linear-gradient(90deg, 
-    var(--color-primary) 0%,
-    var(--color-secondary) 100%
-  );
-  border-radius: 4px;
-  opacity: 0.9;
-  transition: width var(--transition-normal), opacity var(--transition-normal);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
-.activities-title:hover::after {
-  width: 120px;
-  opacity: 1;
+.greeting-container {
+  position: relative;
+  z-index: 1;
+}
+
+.greeting-container h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  display: inline-block;
+  position: relative;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.welcome-text {
+  font-size: 18px;
+  color: var(--color-text-light);
+  margin: 12px 0 0 0;
+  line-height: 1.4;
+  max-width: 280px;
+  position: relative;
+  padding-left: 16px;
+  border-left: 3px solid var(--color-primary);
+  animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Adicione um efeito de destaque ao passar o mouse */
+.header-section:hover .greeting-container h1 {
+  background-size: 200% 200%;
+  animation: gradientShift 2s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Ajuste responsivo para o header */
+@media (max-width: 576px) {
+  .header-section {
+    padding: 20px;
+  }
+
+  .greeting-container h1 {
+    font-size: 36px;
+  }
+
+  .welcome-text {
+    font-size: 16px;
+    margin: 8px 0 0 0;
+    max-width: 240px;
+  }
 }
 
 /* ============= CARDS ============= */
@@ -273,18 +356,231 @@ ion-card-content {
 
 /* ============= RESPONSIVIDADE ============= */
 @media (max-width: 576px) {
-  .activities-title {
-    font-size: 1.6rem;
-    margin: 24px 0 16px;
-    text-align: center;
+  .ion-content-inner {
+    padding: 20px 12px;
   }
 
-  ion-card {
-    margin: 12px 0;
-    border-radius: var(--radius-sm);
+  .greeting-container h1 {
+    font-size: 28px;
   }
 
-  ion-card-content {
+  .categories-section h2,
+  .upcoming-section h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .category-grid {
+    gap: 16px;
+  }
+
+  .category-content {
+    padding: 20px;
+  }
+
+  .icon-container {
+    width: 48px;
+    height: 48px;
+  }
+
+  .category-card ion-icon {
+    font-size: 24px;
+  }
+
+  .event-card ion-card-content {
     padding: 16px;
   }
+
+  .event-date {
+    min-width: 56px;
+    padding-right: 16px;
+  }
+
+  .event-date .day {
+    font-size: 24px;
+  }
+
+  .event-info {
+    padding-left: 16px;
+  }
+}
+
+/* Seção de destaque */
+.featured-section {
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+/* Seção de categorias */
+.categories-section {
+  margin-bottom: 40px;
+}
+
+.categories-section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 24px 0;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.category-card {
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.category-card.desafios {
+  background: var(--color-desafios);
+}
+
+.category-card.eventos {
+  background: var(--color-eventos);
+}
+
+.category-card.consultoria {
+  background: var(--color-consultoria);
+}
+
+.category-card.palestras {
+  background: var(--color-palestras);
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.category-card:active {
+  transform: scale(0.98);
+}
+
+.category-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  height: 100%;
+  color: var(--color-white);
+}
+
+.icon-container {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease;
+}
+
+.category-card:hover .icon-container {
+  transform: scale(1.1);
+}
+
+.category-card ion-icon {
+  font-size: 28px;
+  color: var(--color-white);
+}
+
+.category-card span {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-white);
+  text-align: center;
+}
+
+/* Seção de eventos */
+.upcoming-section {
+  margin-top: 40px;
+}
+
+.upcoming-section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 24px 0;
+}
+
+.event-card {
+  margin: 0 0 16px 0;
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md);
+}
+
+.event-card:active {
+  transform: scale(0.99);
+}
+
+.event-card ion-card-content {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding-right: 20px;
+  border-right: 2px solid rgba(79, 205, 252, 0.1);
+}
+
+.event-date .day {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.event-date .month {
+  font-size: 14px;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.event-info {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.event-info h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 6px 0;
+}
+
+.event-info p {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin: 0;
 }
