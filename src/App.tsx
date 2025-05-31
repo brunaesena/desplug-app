@@ -4,6 +4,7 @@ import { IonReactRouter } from '@ionic/react-router'
 import Home from './pages/Home'
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
+import ForgotPassword from './pages/auth/forgot-password'
 import Profile from './pages/profile/profile'
 import Challenges from './pages/home/challenges'
 import Events from './pages/home/events'
@@ -30,6 +31,7 @@ const App: React.FC = () => (
         {/* Rotas de autenticação */}
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/forgot-password" component={ForgotPassword} />
         
         {/* Rotas principais */}
         <Route path="/home" component={Home} />
