@@ -89,4 +89,12 @@ export interface Review {
   rating: number // 1-5
   comment: string
   createdAt: Timestamp
+}
+
+export interface DayInfo {
+  id?: string;
+  description: string;
+  link: string;
+  createdBy: string;
+  createdAt: Date;
 } 

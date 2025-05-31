@@ -71,7 +71,7 @@ const Create: React.FC = () => {
           <IonButton
             expand="block"
             className="create-button"
-            disabled
+            onClick={() => history.push('/admin/criar/informacao-dia')}
           >
             <IonIcon slot="start" icon={informationCircleOutline} />
             Criar Informação do Dia

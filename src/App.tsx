@@ -14,6 +14,7 @@ import CreateEvent from './pages/admin/create/event/CreateEvent'
 import CreateLecture from './pages/admin/create/lecture/CreateLecture'
 import CreateChallenge from './pages/admin/create/challenge/CreateChallenge'
 import CreateAppointment from './pages/admin/create/appointment/CreateAppointment'
+import CreateDayInfo from './pages/admin/create/day-info/createDayInfo'
 import Create from './pages/admin/create/create'
 
 import '@ionic/react/css/core.css'
@@ -45,6 +46,7 @@ const App: React.FC = () => (
         <Route path="/admin/criar/palestra" component={CreateLecture} />
         <Route path="/admin/criar/desafio" component={CreateChallenge} />
         <Route path="/admin/criar/consulta" component={CreateAppointment} />
+        <Route path="/admin/criar/informacao-dia" component={CreateDayInfo} />
         
         {/* Rota padrão */}
         <Route exact path="/" render={() => <Redirect to="/login" />} />

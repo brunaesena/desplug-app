@@ -16,7 +16,7 @@ import {
   arrayRemove
 } from 'firebase/firestore'
 import { db } from '../firebase'
-import type { User, Event, Lecture, Challenge, Appointment, Attendance } from '../types/firestore'
+import type { User, Event, Lecture, Challenge, Appointment, Attendance, DayInfo } from '../types/firestore'
 
 // User Functions
 export const createUser = async (uid: string, userData: Omit<User, 'uid' | 'createdAt'>) => {
@@ -335,4 +335,33 @@ export const getCreatedActivities = async (userId: string) => {
       appointments: []
     };
   }
+};
+
+export const createDayInfo = async (dayInfo: Omit<DayInfo, 'id'>) => {
+  const dayInfoRef = collection(db, 'dayInfo');
+  const docRef = await addDoc(dayInfoRef, {
+    ...dayInfo,
+    createdAt: Timestamp.fromDate(dayInfo.createdAt)
+  });
+  return docRef.id;
+};
+
+export const getRandomDayInfo = async (): Promise<DayInfo | null> => {
+  const dayInfoRef = collection(db, 'dayInfo');
+  const q = query(dayInfoRef);
+  const querySnapshot = await getDocs(q);
+  
+  if (querySnapshot.empty) {
+    return null;
+  }
+
+  const dayInfos = querySnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+    createdAt: (doc.data().createdAt as Timestamp).toDate()
+  })) as DayInfo[];
+
+  // Get a random day info
+  const randomIndex = Math.floor(Math.random() * dayInfos.length);
+  return dayInfos[randomIndex];
 }; 

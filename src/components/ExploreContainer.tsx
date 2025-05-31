@@ -10,14 +10,8 @@ import {
     IonCardContent,
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom'
-
+import DayInfo from './DayInfo';
 import './ExploreContainer.css'; 
-
-const dailyInfo = {
-    title: "Benefícios da Meditação Mindfulness",
-    content: "Descubra como a prática regular de mindfulness pode reduzir o estresse e melhorar o foco.",
-    link: "/artigo-mindfulness", 
-};
 
 const ExploreContainer: React.FC = () => {
     const history = useHistory()
@@ -37,18 +31,7 @@ const ExploreContainer: React.FC = () => {
 
                     <h2 className="activities-title">Atividades disponíveis</h2>
 
-                    <IonCard
-                        className="activity-card info-card"
-                        onClick={() => navigateTo(dailyInfo.link)}
-                    >
-                        <IonCardContent>
-                            <h3 className="activity-name">{dailyInfo.title}</h3>
-                            <p className="activity-details">
-                                {dailyInfo.content}
-                                <span className="learn-more">Saiba mais</span>
-                            </p>
-                        </IonCardContent>
-                    </IonCard>
+                    <DayInfo />
 
                     <IonCard
                         className="activity-card challenges-card"
