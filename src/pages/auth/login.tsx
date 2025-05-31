@@ -21,10 +21,25 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password)
-      history.push('/home')
+      await signInWithEmailAndPassword(auth, email, password);
+      history.push('/home');
     } catch (err: any) {
-      setError(err.message)
+      const errorCode = err.code;
+    
+      const userFriendlyMessage = (() => {
+        switch (errorCode) {
+          case 'auth/invalid-email':
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+            return 'E-mail ou senha incorretos.';
+          case 'auth/too-many-requests':
+            return 'Muitas tentativas. Tente novamente mais tarde.';
+          default:
+            return 'Ocorreu um erro ao tentar fazer login. Tente novamente.';
+        }
+      })();
+    
+      setError(userFriendlyMessage);
     }
   }
 
