@@ -1,0 +1,19 @@
+.error-message {
+  color: var(--ion-color-danger);
+  margin: 10px 0;
+  padding: 10px;
+  background-color: rgba(var(--ion-color-danger-rgb), 0.1);
+  border-radius: 4px;
+}
+
+ion-textarea {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+ion-item {
+  --padding-start: 0;
+  margin-bottom: 16px;
+}

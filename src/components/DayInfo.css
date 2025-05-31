@@ -1,0 +1,31 @@
+.day-info-card {
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-info-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.day-info-link {
+  display: inline-block;
+  color: var(--ion-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.day-info-link:hover {
+  text-decoration: underline;
+}
+
+.day-info-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}

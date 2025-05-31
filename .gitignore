@@ -32,3 +32,4 @@ yarn-error.log*
 
 # Firebase
 .firebase/hosting.*.cache
+src/firebase.ts
